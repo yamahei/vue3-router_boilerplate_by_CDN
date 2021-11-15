@@ -1,0 +1,23 @@
+/* Font */
+@font-face {
+	font-family: 'NuMochi';
+	src: url(../font/NuKinakoMochi-Reg.otf);
+}
+html, body, pre, code, kbd, samp {
+    font-family: 'NuMochi';
+    image-rendering: pixelated;
+}
+
+/* Scroll */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+  border-radius: 6px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .1);
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(35, 40, 50, .5);
+  border-radius: 6px;
+  box-shadow:0 0 0 1px rgba(255, 255, 255, .3);
+}

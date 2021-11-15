@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>タイトル</title>
+
+    <link href="css/nes.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <div id="app">
+        <div id="header">
+            <h1>Hello App!</h1>
+        </div>
+        <div id="navigator">
+            <ol>
+                <li><router-link to="/">Go to Home</router-link></li>
+                <li><router-link to="/about">Go to About</router-link></li>
+            </ol>
+        </div>
+        <div id="content">
+            <router-view></router-view>
+        </div>
+        <div id="footer">
+            &copy; 2021 yamahei
+        </div>
+    </div>
+    <!--
+        Scripts
+    -->
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/vue-router@4"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
