@@ -1,6 +1,7 @@
+vue3-router_boilerplate_by_CDN
+==============================
 
-Run a local web server
+What is this?
+-------------
 
-```
-ruby -rwebrick -e 'WEBrick::HTTPServer.new(:DocumentRoot => "./", :Port => 4567).start'
-```
+this is a Vue3 with Vue router boilerplate for me.
