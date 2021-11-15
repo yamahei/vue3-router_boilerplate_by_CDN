@@ -1,0 +1,1612 @@
+/**
+ * https://necomesi.jp/blog/tsmd/posts/154
+ */
+
+
+@font-face {
+font-family: MyFontFamily;
+src: local("Hiragino Kaku Gothic ProN"),
+      local("Meiryo");
+}
+
+@font-face {
+  font-family: MyFontFamily;
+  font-weight: bold;
+  src: local("Hiragino Kaku Gothic ProN"),
+       local("Meiryo Bold");
+}
+
+@font-face {
+  font-family: MyFontFamily;
+  src: local("Segoe UI Emoji"),
+       local("Segoe UI Symbol"),
+       local("Apple Color Emoji"),
+       local("Noto Color Emoji"),
+       local("Noto Emoji");
+  unicode-range: /*U+23, U+2A, U+30-39,*/ U+A9, U+AE, U+200D, U+203C, U+2049, U+20E3, U+2122, U+2139, U+2194-2199, U+21A9-21AA, U+231A-231B, U+2328, U+23CF, U+23E9-23F3, U+23F8-23FA, U+24C2, U+25AA-25AB, U+25B6, U+25C0, U+25FB-25FE, U+2600-2604, U+260E, U+2611, U+2614-2615, U+2618, U+261D, U+2620, U+2622-2623, U+2626, U+262A, U+262E-262F, U+2638-263A, U+2640, U+2642, U+2648-2653, U+2660, U+2663, U+2665-2666, U+2668, U+267B, U+267F, U+2692-2697, U+2699, U+269B-269C, U+26A0-26A1, U+26AA-26AB, U+26B0-26B1, U+26BD-26BE, U+26C4-26C5, U+26C8, U+26CE-26CF, U+26D1, U+26D3-26D4, U+26E9-26EA, U+26F0-26F5, U+26F7-26FA, U+26FD, U+2702, U+2705, U+2708-270D, U+270F, U+2712, U+2714, U+2716, U+271D, U+2721, U+2728, U+2733-2734, U+2744, U+2747, U+274C, U+274E, U+2753-2755, U+2757, U+2763-2764, U+2795-2797, U+27A1, U+27B0, U+27BF, U+2934-2935, U+2B05-2B07, U+2B1B-2B1C, U+2B50, U+2B55, U+3030, U+303D, U+3297, U+3299, U+FE0F, U+1F004, U+1F0CF, U+1F170-1F171, U+1F17E-1F17F, U+1F18E, U+1F191-1F19A, U+1F1E6-1F1FF, U+1F201-1F202, U+1F21A, U+1F22F, U+1F232-1F23A, U+1F250-1F251, U+1F300-1F321, U+1F324-1F393, U+1F396-1F397, U+1F399-1F39B, U+1F39E-1F3F0, U+1F3F3-1F3F5, U+1F3F7-1F4FD, U+1F4FF-1F53D, U+1F549-1F54E, U+1F550-1F567, U+1F56F-1F570, U+1F573-1F57A, U+1F587, U+1F58A-1F58D, U+1F590, U+1F595-1F596, U+1F5A4-1F5A5, U+1F5A8, U+1F5B1-1F5B2, U+1F5BC, U+1F5C2-1F5C4, U+1F5D1-1F5D3, U+1F5DC-1F5DE, U+1F5E1, U+1F5E3, U+1F5E8, U+1F5EF, U+1F5F3, U+1F5FA-1F64F, U+1F680-1F6C5, U+1F6CB-1F6D2, U+1F6E0-1F6E5, U+1F6E9, U+1F6EB-1F6EC, U+1F6F0, U+1F6F3-1F6F8, U+1F910-1F93A, U+1F93C-1F93E, U+1F940-1F945, U+1F947-1F94C, U+1F950-1F96B, U+1F980-1F997, U+1F9C0, U+1F9D0-1F9E6, U+E0062-E0063, U+E0065, U+E0067, U+E006C, U+E006E, U+E0073-E0074, U+E0077, U+E007F;
+}
+
+@font-face {
+  font-family: MyFontFamily;
+  font-weight: bold;
+  src: local("Segoe UI Emoji"),
+       local("Segoe UI Symbol"),
+       local("Apple Color Emoji"),
+       local("Noto Color Emoji")
+       local("Noto Emoji");
+  unicode-range: /*U+23, U+2A, U+30-39,*/ U+A9, U+AE, U+200D, U+203C, U+2049, U+20E3, U+2122, U+2139, U+2194-2199, U+21A9-21AA, U+231A-231B, U+2328, U+23CF, U+23E9-23F3, U+23F8-23FA, U+24C2, U+25AA-25AB, U+25B6, U+25C0, U+25FB-25FE, U+2600-2604, U+260E, U+2611, U+2614-2615, U+2618, U+261D, U+2620, U+2622-2623, U+2626, U+262A, U+262E-262F, U+2638-263A, U+2640, U+2642, U+2648-2653, U+2660, U+2663, U+2665-2666, U+2668, U+267B, U+267F, U+2692-2697, U+2699, U+269B-269C, U+26A0-26A1, U+26AA-26AB, U+26B0-26B1, U+26BD-26BE, U+26C4-26C5, U+26C8, U+26CE-26CF, U+26D1, U+26D3-26D4, U+26E9-26EA, U+26F0-26F5, U+26F7-26FA, U+26FD, U+2702, U+2705, U+2708-270D, U+270F, U+2712, U+2714, U+2716, U+271D, U+2721, U+2728, U+2733-2734, U+2744, U+2747, U+274C, U+274E, U+2753-2755, U+2757, U+2763-2764, U+2795-2797, U+27A1, U+27B0, U+27BF, U+2934-2935, U+2B05-2B07, U+2B1B-2B1C, U+2B50, U+2B55, U+3030, U+303D, U+3297, U+3299, U+FE0F, U+1F004, U+1F0CF, U+1F170-1F171, U+1F17E-1F17F, U+1F18E, U+1F191-1F19A, U+1F1E6-1F1FF, U+1F201-1F202, U+1F21A, U+1F22F, U+1F232-1F23A, U+1F250-1F251, U+1F300-1F321, U+1F324-1F393, U+1F396-1F397, U+1F399-1F39B, U+1F39E-1F3F0, U+1F3F3-1F3F5, U+1F3F7-1F4FD, U+1F4FF-1F53D, U+1F549-1F54E, U+1F550-1F567, U+1F56F-1F570, U+1F573-1F57A, U+1F587, U+1F58A-1F58D, U+1F590, U+1F595-1F596, U+1F5A4-1F5A5, U+1F5A8, U+1F5B1-1F5B2, U+1F5BC, U+1F5C2-1F5C4, U+1F5D1-1F5D3, U+1F5DC-1F5DE, U+1F5E1, U+1F5E3, U+1F5E8, U+1F5EF, U+1F5F3, U+1F5FA-1F64F, U+1F680-1F6C5, U+1F6CB-1F6D2, U+1F6E0-1F6E5, U+1F6E9, U+1F6EB-1F6EC, U+1F6F0, U+1F6F3-1F6F8, U+1F910-1F93A, U+1F93C-1F93E, U+1F940-1F945, U+1F947-1F94C, U+1F950-1F96B, U+1F980-1F997, U+1F9C0, U+1F9D0-1F9E6, U+E0062-E0063, U+E0065, U+E0067, U+E006C, U+E006E, U+E0073-E0074, U+E0077, U+E007F;
+}
+
+i.emoji { font-style: normal; }
+i.emoji.x1 { font-size: 1rem; }
+i.emoji.x2 { font-size: 2rem; }
+i.emoji.x4 { font-size: 4rem; }
+i.emoji.x8 { font-size: 8rem; }
+
+
+/**
+ * 顔文字: http://www.asahi-net.or.jp/~ax2s-kmtn/ref/unicode/u1f600.html
+ * その他の記号: http://www.asahi-net.or.jp/~ax2s-kmtn/ref/unicode/u2600.html
+ * その他の記号と絵文字: http://www.asahi-net.or.jp/~ax2s-kmtn/ref/unicode/u1f300.html
+ * 記号と絵文字補助: http://www.asahi-net.or.jp/~ax2s-kmtn/ref/unicode/u1f900.html
+ * 記号と絵文字拡張A: http://www.asahi-net.or.jp/~ax2s-kmtn/ref/unicode/u1fa70.html
+ * 交通と地図の記号: http://www.asahi-net.or.jp/~ax2s-kmtn/ref/unicode/u1f680.html
+
+ list = $x("//table[@class='basic']//tr")
+ .filter($tr=>$tr.children[0].innerText.match(/^[a-fA-F0-9]+$/))
+ .map($tr=>{ return {
+   unicode: `&${$tr.children[0].innerText}`,
+   emoji: $tr.children[1].innerText,
+   name: $tr.children[2].innerText,
+ }})
+ .map(o=>"/"+"*"+`i.emoji.EMOJINAME::before{content: '${o.emoji}'; title: '${o.name}';}`+"*"+"/")
+ .join("\n");
+
+ console.log(list);
+ */
+
+
+/* 顔文字: http://www.asahi-net.or.jp/~ax2s-kmtn/ref/unicode/u1f600.html */
+/*i.emoji.EMOJINAME::before{content: '😀'; title: 'GRINNING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😁'; title: 'GRINNING FACE WITH SMILING EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '😂'; title: 'FACE WITH TEARS OF JOY';}*/
+/*i.emoji.EMOJINAME::before{content: '😃'; title: 'SMILING FACE WITH OPEN MOUTH';}*/
+/*i.emoji.EMOJINAME::before{content: '😄'; title: 'SMILING FACE WITH OPEN MOUTH AND SMILING EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '😅'; title: 'SMILING FACE WITH OPEN MOUTH AND COLD SWEAT';}*/
+/*i.emoji.EMOJINAME::before{content: '😆'; title: 'SMILING FACE WITH OPEN MOUTH AND TIGHTLY-CLOSED EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '😇'; title: 'SMILING FACE WITH HALO';}*/
+/*i.emoji.EMOJINAME::before{content: '😈'; title: 'SMILING FACE WITH HORNS';}*/
+/*i.emoji.EMOJINAME::before{content: '😉'; title: 'WINKING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😊'; title: 'SMILING FACE WITH SMILING EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '😋'; title: 'FACE SAVOURING DELICIOUS FOOD';}*/
+/*i.emoji.EMOJINAME::before{content: '😌'; title: 'RELIEVED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😍'; title: 'SMILING FACE WITH HEART-SHAPED EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '😎'; title: 'SMILING FACE WITH SUNGLASSES';}*/
+/*i.emoji.EMOJINAME::before{content: '😏'; title: 'SMIRKING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😐'; title: 'NEUTRAL FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😑'; title: 'EXPRESSIONLESS FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😒'; title: 'UNAMUSED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😓'; title: 'FACE WITH COLD SWEAT';}*/
+/*i.emoji.EMOJINAME::before{content: '😔'; title: 'PENSIVE FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😕'; title: 'CONFUSED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😖'; title: 'CONFOUNDED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😗'; title: 'KISSING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😘'; title: 'FACE THROWING A KISS';}*/
+/*i.emoji.EMOJINAME::before{content: '😙'; title: 'KISSING FACE WITH SMILING EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '😚'; title: 'KISSING FACE WITH CLOSED EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '😛'; title: 'FACE WITH STUCK-OUT TONGUE';}*/
+/*i.emoji.EMOJINAME::before{content: '😜'; title: 'FACE WITH STUCK-OUT TONGUE AND WINKING EYE';}*/
+/*i.emoji.EMOJINAME::before{content: '😝'; title: 'FACE WITH STUCK-OUT TONGUE AND TIGHTLY-CLOSED EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '😞'; title: 'DISAPPOINTED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😟'; title: 'WORRIED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😠'; title: 'ANGRY FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😡'; title: 'POUTING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😢'; title: 'CRYING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😣'; title: 'PERSEVERING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😤'; title: 'FACE WITH LOOK OF TRIUMPH';}*/
+/*i.emoji.EMOJINAME::before{content: '😥'; title: 'DISAPPOINTED BUT RELIEVED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😦'; title: 'FROWNING FACE WITH OPEN MOUTH';}*/
+/*i.emoji.EMOJINAME::before{content: '😧'; title: 'ANGUISHED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😨'; title: 'FEARFUL FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😩'; title: 'WEARY FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😪'; title: 'SLEEPY FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😫'; title: 'TIRED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😬'; title: 'GRIMACING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😭'; title: 'LOUDLY CRYING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😮'; title: 'FACE WITH OPEN MOUTH';}*/
+/*i.emoji.EMOJINAME::before{content: '😯'; title: 'HUSHED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😰'; title: 'FACE WITH OPEN MOUTH AND COLD SWEAT';}*/
+/*i.emoji.EMOJINAME::before{content: '😱'; title: 'FACE SCREAMING IN FEAR';}*/
+/*i.emoji.EMOJINAME::before{content: '😲'; title: 'ASTONISHED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😳'; title: 'FLUSHED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😴'; title: 'SLEEPING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😵'; title: 'DIZZY FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😶'; title: 'FACE WITHOUT MOUTH';}*/
+/*i.emoji.EMOJINAME::before{content: '😷'; title: 'FACE WITH MEDICAL MASK';}*/
+/*i.emoji.EMOJINAME::before{content: '😸'; title: 'GRINNING CAT FACE WITH SMILING EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '😹'; title: 'CAT FACE WITH TEARS OF JOY';}*/
+/*i.emoji.EMOJINAME::before{content: '😺'; title: 'SMILING CAT FACE WITH OPEN MOUTH';}*/
+/*i.emoji.EMOJINAME::before{content: '😻'; title: 'SMILING CAT FACE WITH HEART-SHAPED EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '😼'; title: 'CAT FACE WITH WRY SMILE';}*/
+/*i.emoji.EMOJINAME::before{content: '😽'; title: 'KISSING CAT FACE WITH CLOSED EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '😾'; title: 'POUTING CAT FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '😿'; title: 'CRYING CAT FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🙀'; title: 'WEARY CAT FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🙁'; title: 'SLIGHTLY FROWNING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🙂'; title: 'SLIGHTLY SMILING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🙃'; title: 'UPSIDE-DOWN FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🙄'; title: 'FACE WITH ROLLING EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '🙅'; title: 'FACE WITH NO GOOD GESTURE';}*/
+/*i.emoji.EMOJINAME::before{content: '🙆'; title: 'FACE WITH OK GESTURE';}*/
+/*i.emoji.EMOJINAME::before{content: '🙇'; title: 'PERSON BOWING DEEPLY';}*/
+/*i.emoji.EMOJINAME::before{content: '🙈'; title: 'SEE-NO-EVIL MONKEY';}*/
+/*i.emoji.EMOJINAME::before{content: '🙉'; title: 'HEAR-NO-EVIL MONKEY';}*/
+/*i.emoji.EMOJINAME::before{content: '🙊'; title: 'SPEAK-NO-EVIL MONKEY';}*/
+/*i.emoji.EMOJINAME::before{content: '🙋'; title: 'HAPPY PERSON RAISING ONE HAND';}*/
+/*i.emoji.EMOJINAME::before{content: '🙌'; title: 'PERSON RAISING BOTH HANDS IN CELEBRATION';}*/
+/*i.emoji.EMOJINAME::before{content: '🙍'; title: 'PERSON FROWNING';}*/
+/*i.emoji.EMOJINAME::before{content: '🙎'; title: 'PERSON WITH POUTING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🙏'; title: 'PERSON WITH FOLDED HANDS';}*/
+
+
+/* その他の記号: http://www.asahi-net.or.jp/~ax2s-kmtn/ref/unicode/u2600.html */
+/*i.emoji.EMOJINAME::before{content: '☀'; title: 'BLACK SUN WITH RAYS';}*/
+/*i.emoji.EMOJINAME::before{content: '☁'; title: 'CLOUD';}*/
+/*i.emoji.EMOJINAME::before{content: '☂'; title: 'UMBRELLA';}*/
+/*i.emoji.EMOJINAME::before{content: '☃'; title: 'SNOWMAN';}*/
+/*i.emoji.EMOJINAME::before{content: '☄'; title: 'COMET';}*/
+/*i.emoji.EMOJINAME::before{content: '★'; title: 'BLACK STAR';}*/
+/*i.emoji.EMOJINAME::before{content: '☆'; title: 'WHITE STAR';}*/
+/*i.emoji.EMOJINAME::before{content: '☇'; title: 'LIGHTNING';}*/
+/*i.emoji.EMOJINAME::before{content: '☈'; title: 'THUNDERSTORM';}*/
+/*i.emoji.EMOJINAME::before{content: '☉'; title: 'SUN';}*/
+/*i.emoji.EMOJINAME::before{content: '☊'; title: 'ASCENDING NODE';}*/
+/*i.emoji.EMOJINAME::before{content: '☋'; title: 'DESCENDING NODE';}*/
+/*i.emoji.EMOJINAME::before{content: '☌'; title: 'CONJUNCTION';}*/
+/*i.emoji.EMOJINAME::before{content: '☍'; title: 'OPPOSITION';}*/
+/*i.emoji.EMOJINAME::before{content: '☎'; title: 'BLACK TELEPHONE';}*/
+/*i.emoji.EMOJINAME::before{content: '☏'; title: 'WHITE TELEPHONE';}*/
+/*i.emoji.EMOJINAME::before{content: '☐'; title: 'BALLOT BOX';}*/
+/*i.emoji.EMOJINAME::before{content: '☑'; title: 'BALLOT BOX WITH CHECK';}*/
+/*i.emoji.EMOJINAME::before{content: '☒'; title: 'BALLOT BOX WITH X';}*/
+/*i.emoji.EMOJINAME::before{content: '☓'; title: 'SALTIRE';}*/
+/*i.emoji.EMOJINAME::before{content: '☔'; title: 'UMBRELLA WITH RAIN DROPS';}*/
+/*i.emoji.EMOJINAME::before{content: '☕'; title: 'HOT BEVERAGE';}*/
+/*i.emoji.EMOJINAME::before{content: '☖'; title: 'WHITE SHOGI PIECE';}*/
+/*i.emoji.EMOJINAME::before{content: '☗'; title: 'BLACK SHOGI PIECE';}*/
+/*i.emoji.EMOJINAME::before{content: '☘'; title: 'SHAMROCK';}*/
+/*i.emoji.EMOJINAME::before{content: '☙'; title: 'REVERSED ROTATED FLORAL HEART BULLET';}*/
+/*i.emoji.EMOJINAME::before{content: '☚'; title: 'BLACK LEFT POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '☛'; title: 'BLACK RIGHT POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '☜'; title: 'WHITE LEFT POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '☝'; title: 'WHITE UP POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '☞'; title: 'WHITE RIGHT POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '☟'; title: 'WHITE DOWN POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '☠'; title: 'SKULL AND CROSSBONES';}*/
+/*i.emoji.EMOJINAME::before{content: '☡'; title: 'CAUTION SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '☢'; title: 'RADIOACTIVE SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '☣'; title: 'BIOHAZARD SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '☤'; title: 'CADUCEUS';}*/
+/*i.emoji.EMOJINAME::before{content: '☥'; title: 'ANKH';}*/
+/*i.emoji.EMOJINAME::before{content: '☦'; title: 'ORTHODOX CROSS';}*/
+/*i.emoji.EMOJINAME::before{content: '☧'; title: 'CHI RHO';}*/
+/*i.emoji.EMOJINAME::before{content: '☨'; title: 'CROSS OF LORRAINE';}*/
+/*i.emoji.EMOJINAME::before{content: '☩'; title: 'CROSS OF JERUSALEM';}*/
+/*i.emoji.EMOJINAME::before{content: '☪'; title: 'STAR AND CRESCENT';}*/
+/*i.emoji.EMOJINAME::before{content: '☫'; title: 'FARSI SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '☬'; title: 'ADI SHAKTI';}*/
+/*i.emoji.EMOJINAME::before{content: '☭'; title: 'HAMMER AND SICKLE';}*/
+/*i.emoji.EMOJINAME::before{content: '☮'; title: 'PEACE SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '☯'; title: 'YIN YANG';}*/
+/*i.emoji.EMOJINAME::before{content: '☰'; title: 'TRIGRAM FOR HEAVEN';}*/
+/*i.emoji.EMOJINAME::before{content: '☱'; title: 'TRIGRAM FOR LAKE';}*/
+/*i.emoji.EMOJINAME::before{content: '☲'; title: 'TRIGRAM FOR FIRE';}*/
+/*i.emoji.EMOJINAME::before{content: '☳'; title: 'TRIGRAM FOR THUNDER';}*/
+/*i.emoji.EMOJINAME::before{content: '☴'; title: 'TRIGRAM FOR WIND';}*/
+/*i.emoji.EMOJINAME::before{content: '☵'; title: 'TRIGRAM FOR WATER';}*/
+/*i.emoji.EMOJINAME::before{content: '☶'; title: 'TRIGRAM FOR MOUNTAIN';}*/
+/*i.emoji.EMOJINAME::before{content: '☷'; title: 'TRIGRAM FOR EARTH';}*/
+/*i.emoji.EMOJINAME::before{content: '☸'; title: 'WHEEL OF DHARMA';}*/
+/*i.emoji.EMOJINAME::before{content: '☹'; title: 'WHITE FROWNING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '☺'; title: 'WHITE SMILING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '☻'; title: 'BLACK SMILING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '☼'; title: 'WHITE SUN WITH RAYS';}*/
+/*i.emoji.EMOJINAME::before{content: '☽'; title: 'FIRST QUARTER MOON';}*/
+/*i.emoji.EMOJINAME::before{content: '☾'; title: 'LAST QUARTER MOON';}*/
+/*i.emoji.EMOJINAME::before{content: '☿'; title: 'MERCURY';}*/
+/*i.emoji.EMOJINAME::before{content: '♀'; title: 'FEMALE SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '♁'; title: 'EARTH';}*/
+/*i.emoji.EMOJINAME::before{content: '♂'; title: 'MALE SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '♃'; title: 'JUPITER';}*/
+/*i.emoji.EMOJINAME::before{content: '♄'; title: 'SATURN';}*/
+/*i.emoji.EMOJINAME::before{content: '♅'; title: 'URANUS';}*/
+/*i.emoji.EMOJINAME::before{content: '♆'; title: 'NEPTUNE';}*/
+/*i.emoji.EMOJINAME::before{content: '♇'; title: 'PLUTO';}*/
+/*i.emoji.EMOJINAME::before{content: '♈'; title: 'ARIES';}*/
+/*i.emoji.EMOJINAME::before{content: '♉'; title: 'TAURUS';}*/
+/*i.emoji.EMOJINAME::before{content: '♊'; title: 'GEMINI';}*/
+/*i.emoji.EMOJINAME::before{content: '♋'; title: 'CANCER';}*/
+/*i.emoji.EMOJINAME::before{content: '♌'; title: 'LEO';}*/
+/*i.emoji.EMOJINAME::before{content: '♍'; title: 'VIRGO';}*/
+/*i.emoji.EMOJINAME::before{content: '♎'; title: 'LIBRA';}*/
+/*i.emoji.EMOJINAME::before{content: '♏'; title: 'SCORPIUS';}*/
+/*i.emoji.EMOJINAME::before{content: '♐'; title: 'SAGITTARIUS';}*/
+/*i.emoji.EMOJINAME::before{content: '♑'; title: 'CAPRICORN';}*/
+/*i.emoji.EMOJINAME::before{content: '♒'; title: 'AQUARIUS';}*/
+/*i.emoji.EMOJINAME::before{content: '♓'; title: 'PISCES';}*/
+/*i.emoji.EMOJINAME::before{content: '♔'; title: 'WHITE CHESS KING';}*/
+/*i.emoji.EMOJINAME::before{content: '♕'; title: 'WHITE CHESS QUEEN';}*/
+/*i.emoji.EMOJINAME::before{content: '♖'; title: 'WHITE CHESS ROOK';}*/
+/*i.emoji.EMOJINAME::before{content: '♗'; title: 'WHITE CHESS BISHOP';}*/
+/*i.emoji.EMOJINAME::before{content: '♘'; title: 'WHITE CHESS KNIGHT';}*/
+/*i.emoji.EMOJINAME::before{content: '♙'; title: 'WHITE CHESS PAWN';}*/
+/*i.emoji.EMOJINAME::before{content: '♚'; title: 'BLACK CHESS KING';}*/
+/*i.emoji.EMOJINAME::before{content: '♛'; title: 'BLACK CHESS QUEEN';}*/
+/*i.emoji.EMOJINAME::before{content: '♜'; title: 'BLACK CHESS ROOK';}*/
+/*i.emoji.EMOJINAME::before{content: '♝'; title: 'BLACK CHESS BISHOP';}*/
+/*i.emoji.EMOJINAME::before{content: '♞'; title: 'BLACK CHESS KNIGHT';}*/
+/*i.emoji.EMOJINAME::before{content: '♟'; title: 'BLACK CHESS PAWN';}*/
+/*i.emoji.EMOJINAME::before{content: '♠'; title: 'BLACK SPADE SUIT';}*/
+/*i.emoji.EMOJINAME::before{content: '♡'; title: 'WHITE HEART SUIT';}*/
+/*i.emoji.EMOJINAME::before{content: '♢'; title: 'WHITE DIAMOND SUIT';}*/
+/*i.emoji.EMOJINAME::before{content: '♣'; title: 'BLACK CLUB SUIT';}*/
+/*i.emoji.EMOJINAME::before{content: '♤'; title: 'WHITE SPADE SUIT';}*/
+/*i.emoji.EMOJINAME::before{content: '♥'; title: 'BLACK HEART SUIT';}*/
+/*i.emoji.EMOJINAME::before{content: '♦'; title: 'BLACK DIAMOND SUIT';}*/
+/*i.emoji.EMOJINAME::before{content: '♧'; title: 'WHITE CLUB SUIT';}*/
+/*i.emoji.EMOJINAME::before{content: '♨'; title: 'HOT SPRINGS';}*/
+/*i.emoji.EMOJINAME::before{content: '♩'; title: 'QUARTER NOTE';}*/
+/*i.emoji.EMOJINAME::before{content: '♪'; title: 'EIGHTH NOTE';}*/
+/*i.emoji.EMOJINAME::before{content: '♫'; title: 'BEAMED EIGHTH NOTES';}*/
+/*i.emoji.EMOJINAME::before{content: '♬'; title: 'BEAMED SIXTEENTH NOTES';}*/
+/*i.emoji.EMOJINAME::before{content: '♭'; title: 'MUSIC FLAT SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '♮'; title: 'MUSIC NATURAL SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '♯'; title: 'MUSIC SHARP SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '♰'; title: 'WEST SYRIAC CROSS';}*/
+/*i.emoji.EMOJINAME::before{content: '♱'; title: 'EAST SYRIAC CROSS';}*/
+/*i.emoji.EMOJINAME::before{content: '♲'; title: 'UNIVERSAL RECYCLING SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '♳'; title: 'RECYCLING SYMBOL FOR TYPE-1 PLASTICS';}*/
+/*i.emoji.EMOJINAME::before{content: '♴'; title: 'RECYCLING SYMBOL FOR TYPE-2 PLASTICS';}*/
+/*i.emoji.EMOJINAME::before{content: '♵'; title: 'RECYCLING SYMBOL FOR TYPE-3 PLASTICS';}*/
+/*i.emoji.EMOJINAME::before{content: '♶'; title: 'RECYCLING SYMBOL FOR TYPE-4 PLASTICS';}*/
+/*i.emoji.EMOJINAME::before{content: '♷'; title: 'RECYCLING SYMBOL FOR TYPE-5 PLASTICS';}*/
+/*i.emoji.EMOJINAME::before{content: '♸'; title: 'RECYCLING SYMBOL FOR TYPE-6 PLASTICS';}*/
+/*i.emoji.EMOJINAME::before{content: '♹'; title: 'RECYCLING SYMBOL FOR TYPE-7 PLASTICS';}*/
+/*i.emoji.EMOJINAME::before{content: '♺'; title: 'RECYCLING SYMBOL FOR GENERIC MATERIALS';}*/
+/*i.emoji.EMOJINAME::before{content: '♻'; title: 'BLACK UNIVERSAL RECYCLING SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '♼'; title: 'RECYCLED PAPER SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '♽'; title: 'PARTIALLY-RECYCLED PAPER SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '♾'; title: 'PERMANENT PAPER SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '♿'; title: 'WHEELCHAIR SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '⚀'; title: 'DIE FACE-1';}*/
+/*i.emoji.EMOJINAME::before{content: '⚁'; title: 'DIE FACE-2';}*/
+/*i.emoji.EMOJINAME::before{content: '⚂'; title: 'DIE FACE-3';}*/
+/*i.emoji.EMOJINAME::before{content: '⚃'; title: 'DIE FACE-4';}*/
+/*i.emoji.EMOJINAME::before{content: '⚄'; title: 'DIE FACE-5';}*/
+/*i.emoji.EMOJINAME::before{content: '⚅'; title: 'DIE FACE-6';}*/
+/*i.emoji.EMOJINAME::before{content: '⚆'; title: 'WHITE CIRCLE WITH DOT RIGHT';}*/
+/*i.emoji.EMOJINAME::before{content: '⚇'; title: 'WHITE CIRCLE WITH TWO DOTS';}*/
+/*i.emoji.EMOJINAME::before{content: '⚈'; title: 'BLACK CIRCLE WITH WHITE DOT RIGHT';}*/
+/*i.emoji.EMOJINAME::before{content: '⚉'; title: 'BLACK CIRCLE WITH TWO WHITE DOTS';}*/
+/*i.emoji.EMOJINAME::before{content: '⚊'; title: 'MONOGRAM FOR YANG';}*/
+/*i.emoji.EMOJINAME::before{content: '⚋'; title: 'MONOGRAM FOR YIN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚌'; title: 'DIGRAM FOR GREATER YANG';}*/
+/*i.emoji.EMOJINAME::before{content: '⚍'; title: 'DIGRAM FOR LESSER YIN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚎'; title: 'DIGRAM FOR LESSER YANG';}*/
+/*i.emoji.EMOJINAME::before{content: '⚏'; title: 'DIGRAM FOR GREATER YIN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚐'; title: 'WHITE FLAG';}*/
+/*i.emoji.EMOJINAME::before{content: '⚑'; title: 'BLACK FLAG';}*/
+/*i.emoji.EMOJINAME::before{content: '⚒'; title: 'HAMMER AND PICK';}*/
+/*i.emoji.EMOJINAME::before{content: '⚓'; title: 'ANCHOR';}*/
+/*i.emoji.EMOJINAME::before{content: '⚔'; title: 'CROSSED SWORDS';}*/
+/*i.emoji.EMOJINAME::before{content: '⚕'; title: 'STAFF OF AESCULAPIUS';}*/
+/*i.emoji.EMOJINAME::before{content: '⚖'; title: 'SCALES';}*/
+/*i.emoji.EMOJINAME::before{content: '⚗'; title: 'ALEMBIC';}*/
+/*i.emoji.EMOJINAME::before{content: '⚘'; title: 'FLOWER';}*/
+/*i.emoji.EMOJINAME::before{content: '⚙'; title: 'GEAR';}*/
+/*i.emoji.EMOJINAME::before{content: '⚚'; title: 'STAFF OF HERMES';}*/
+/*i.emoji.EMOJINAME::before{content: '⚛'; title: 'ATOM SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '⚜'; title: 'FLEUR-DE-LIS';}*/
+/*i.emoji.EMOJINAME::before{content: '⚝'; title: 'OUTLINED WHITE STAR';}*/
+/*i.emoji.EMOJINAME::before{content: '⚞'; title: 'THREE LINES CONVERGING RIGHT';}*/
+/*i.emoji.EMOJINAME::before{content: '⚟'; title: 'THREE LINES CONVERGING LEFT';}*/
+/*i.emoji.EMOJINAME::before{content: '⚠'; title: 'WARNING SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚡'; title: 'HIGH VOLTAGE SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚢'; title: 'DOUBLED FEMALE SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚣'; title: 'DOUBLED MALE SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚤'; title: 'INTERLOCKED FEMALE AND MALE SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚥'; title: 'MALE AND FEMALE SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚦'; title: 'MALE WITH STROKE SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚧'; title: 'MALE WITH STROKE AND MALE AND FEMALE SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚨'; title: 'VERTICAL MALE WITH STROKE SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚩'; title: 'HORIZONTAL MALE WITH STROKE SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚪'; title: 'MEDIUM WHITE CIRCLE';}*/
+/*i.emoji.EMOJINAME::before{content: '⚫'; title: 'MEDIUM BLACK CIRCLE';}*/
+/*i.emoji.EMOJINAME::before{content: '⚬'; title: 'MEDIUM SMALL WHITE CIRCLE';}*/
+/*i.emoji.EMOJINAME::before{content: '⚭'; title: 'MARRIAGE SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '⚮'; title: 'DIVORCE SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '⚯'; title: 'UNMARRIED PARTNERSHIP SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '⚰'; title: 'COFFIN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚱'; title: 'FUNERAL URN';}*/
+/*i.emoji.EMOJINAME::before{content: '⚲'; title: 'NEUTER';}*/
+/*i.emoji.EMOJINAME::before{content: '⚳'; title: 'CERES';}*/
+/*i.emoji.EMOJINAME::before{content: '⚴'; title: 'PALLAS';}*/
+/*i.emoji.EMOJINAME::before{content: '⚵'; title: 'JUNO';}*/
+/*i.emoji.EMOJINAME::before{content: '⚶'; title: 'VESTA';}*/
+/*i.emoji.EMOJINAME::before{content: '⚷'; title: 'CHIRON';}*/
+/*i.emoji.EMOJINAME::before{content: '⚸'; title: 'BLACK MOON LILITH';}*/
+/*i.emoji.EMOJINAME::before{content: '⚹'; title: 'SEXTILE';}*/
+/*i.emoji.EMOJINAME::before{content: '⚺'; title: 'SEMISEXTILE';}*/
+/*i.emoji.EMOJINAME::before{content: '⚻'; title: 'QUINCUNX';}*/
+/*i.emoji.EMOJINAME::before{content: '⚼'; title: 'SESQUIQUADRATE';}*/
+/*i.emoji.EMOJINAME::before{content: '⚽'; title: 'SOCCER BALL';}*/
+/*i.emoji.EMOJINAME::before{content: '⚾'; title: 'BASEBALL';}*/
+/*i.emoji.EMOJINAME::before{content: '⚿'; title: 'SQUARED KEY';}*/
+/*i.emoji.EMOJINAME::before{content: '⛀'; title: 'WHITE DRAUGHTS MAN';}*/
+/*i.emoji.EMOJINAME::before{content: '⛁'; title: 'WHITE DRAUGHTS KING';}*/
+/*i.emoji.EMOJINAME::before{content: '⛂'; title: 'BLACK DRAUGHTS MAN';}*/
+/*i.emoji.EMOJINAME::before{content: '⛃'; title: 'BLACK DRAUGHTS KING';}*/
+/*i.emoji.EMOJINAME::before{content: '⛄'; title: 'SNOWMAN WITHOUT SNOW';}*/
+/*i.emoji.EMOJINAME::before{content: '⛅'; title: 'SUN BEHIND CLOUD';}*/
+/*i.emoji.EMOJINAME::before{content: '⛆'; title: 'RAIN';}*/
+/*i.emoji.EMOJINAME::before{content: '⛇'; title: 'BLACK SNOWMAN';}*/
+/*i.emoji.EMOJINAME::before{content: '⛈'; title: 'THUNDER CLOUD AND RAIN';}*/
+/*i.emoji.EMOJINAME::before{content: '⛉'; title: 'TURNED WHITE SHOGI PIECE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛊'; title: 'TURNED BLACK SHOGI PIECE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛋'; title: 'WHITE DIAMOND IN SQUARE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛌'; title: 'CROSSING LANES';}*/
+/*i.emoji.EMOJINAME::before{content: '⛍'; title: 'DISABLED CAR';}*/
+/*i.emoji.EMOJINAME::before{content: '⛎'; title: 'OPHIUCHUS';}*/
+/*i.emoji.EMOJINAME::before{content: '⛏'; title: 'PICK';}*/
+/*i.emoji.EMOJINAME::before{content: '⛐'; title: 'CAR SLIDING';}*/
+/*i.emoji.EMOJINAME::before{content: '⛑'; title: 'HELMET WITH WHITE CROSS';}*/
+/*i.emoji.EMOJINAME::before{content: '⛒'; title: 'CIRCLED CROSSING LANES';}*/
+/*i.emoji.EMOJINAME::before{content: '⛓'; title: 'CHAINS';}*/
+/*i.emoji.EMOJINAME::before{content: '⛔'; title: 'NO ENTRY';}*/
+/*i.emoji.EMOJINAME::before{content: '⛕'; title: 'ALTERNATE ONE-WAY LEFT WAY TRAFFIC';}*/
+/*i.emoji.EMOJINAME::before{content: '⛖'; title: 'BLACK TWO-WAY LEFT WAY TRAFFIC';}*/
+/*i.emoji.EMOJINAME::before{content: '⛗'; title: 'WHITE TWO-WAY LEFT WAY TRAFFIC';}*/
+/*i.emoji.EMOJINAME::before{content: '⛘'; title: 'BLACK LEFT LANE MERGE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛙'; title: 'WHITE LEFT LANE MERGE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛚'; title: 'DRIVE SLOW SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '⛛'; title: 'HEAVY WHITE DOWN-POINTING TRIANGLE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛜'; title: 'LEFT CLOSED ENTRY';}*/
+/*i.emoji.EMOJINAME::before{content: '⛝'; title: 'SQUARED SALTIRE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛞'; title: 'FALLING DIAGONAL IN WHITE CIRCLE IN BLACK SQUARE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛟'; title: 'BLACK TRUCK';}*/
+/*i.emoji.EMOJINAME::before{content: '⛠'; title: 'RESTRICTED LEFT ENTRY-1';}*/
+/*i.emoji.EMOJINAME::before{content: '⛡'; title: 'RESTRICTED LEFT ENTRY-2';}*/
+/*i.emoji.EMOJINAME::before{content: '⛢'; title: 'ASTRONOMICAL SYMBOL FOR URANUS';}*/
+/*i.emoji.EMOJINAME::before{content: '⛣'; title: 'HEAVY CIRCLE WITH STROKE AND TWO DOTS ABOVE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛤'; title: 'PENTAGRAM';}*/
+/*i.emoji.EMOJINAME::before{content: '⛥'; title: 'RIGHT-HANDED INTERLACED PENTAGRAM';}*/
+/*i.emoji.EMOJINAME::before{content: '⛦'; title: 'LEFT-HANDED INTERLACED PENTAGRAM';}*/
+/*i.emoji.EMOJINAME::before{content: '⛧'; title: 'INVERTED PENTAGRAM';}*/
+/*i.emoji.EMOJINAME::before{content: '⛨'; title: 'BLACK CROSS ON SHIELD';}*/
+/*i.emoji.EMOJINAME::before{content: '⛩'; title: 'SHINTO SHRINE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛪'; title: 'CHURCH';}*/
+/*i.emoji.EMOJINAME::before{content: '⛫'; title: 'CASTLE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛬'; title: 'HISTORIC SITE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛭'; title: 'GEAR WITHOUT HUB';}*/
+/*i.emoji.EMOJINAME::before{content: '⛮'; title: 'GEAR WITH HANDLES';}*/
+/*i.emoji.EMOJINAME::before{content: '⛯'; title: 'MAP SYMBOL FOR LIGHTHOUSE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛰'; title: 'MOUNTAIN';}*/
+/*i.emoji.EMOJINAME::before{content: '⛱'; title: 'UMBRELLA ON GROUND';}*/
+/*i.emoji.EMOJINAME::before{content: '⛲'; title: 'FOUNTAIN';}*/
+/*i.emoji.EMOJINAME::before{content: '⛳'; title: 'FLAG IN HOLE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛴'; title: 'FERRY';}*/
+/*i.emoji.EMOJINAME::before{content: '⛵'; title: 'SAILBOAT';}*/
+/*i.emoji.EMOJINAME::before{content: '⛶'; title: 'SQUARE FOUR CORNERS';}*/
+/*i.emoji.EMOJINAME::before{content: '⛷'; title: 'SKIER';}*/
+/*i.emoji.EMOJINAME::before{content: '⛸'; title: 'ICE SKATE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛹'; title: 'PERSON WITH BALL';}*/
+/*i.emoji.EMOJINAME::before{content: '⛺'; title: 'TENT';}*/
+/*i.emoji.EMOJINAME::before{content: '⛻'; title: 'JAPANESE BANK SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '⛼'; title: 'HEADSTONE GRAVEYARD SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '⛽'; title: 'FUEL PUMP';}*/
+/*i.emoji.EMOJINAME::before{content: '⛾'; title: 'CUP ON BLACK SQUARE';}*/
+/*i.emoji.EMOJINAME::before{content: '⛿'; title: 'WHITE FLAG WITH HORIZONTAL MIDDLE BLACK STRIPE';}*/
+
+
+/* その他の記号と絵文字: http://www.asahi-net.or.jp/~ax2s-kmtn/ref/unicode/u1f300.html */
+/*i.emoji.EMOJINAME::before{content: '🌀'; title: 'CYCLONE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌁'; title: 'FOGGY';}*/
+/*i.emoji.EMOJINAME::before{content: '🌂'; title: 'CLOSED UMBRELLA';}*/
+/*i.emoji.EMOJINAME::before{content: '🌃'; title: 'NIGHT WITH STARS';}*/
+/*i.emoji.EMOJINAME::before{content: '🌄'; title: 'SUNRISE OVER MOUNTAINS';}*/
+/*i.emoji.EMOJINAME::before{content: '🌅'; title: 'SUNRISE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌆'; title: 'CITYSCAPE AT DUSK';}*/
+/*i.emoji.EMOJINAME::before{content: '🌇'; title: 'SUNSET OVER BUILDINGS';}*/
+/*i.emoji.EMOJINAME::before{content: '🌈'; title: 'RAINBOW';}*/
+/*i.emoji.EMOJINAME::before{content: '🌉'; title: 'BRIDGE AT NIGHT';}*/
+/*i.emoji.EMOJINAME::before{content: '🌊'; title: 'WATER WAVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌋'; title: 'VOLCANO';}*/
+/*i.emoji.EMOJINAME::before{content: '🌌'; title: 'MILKY WAY';}*/
+/*i.emoji.EMOJINAME::before{content: '🌍'; title: 'EARTH GLOBE EUROPE-AFRICA';}*/
+/*i.emoji.EMOJINAME::before{content: '🌎'; title: 'EARTH GLOBE AMERICAS';}*/
+/*i.emoji.EMOJINAME::before{content: '🌏'; title: 'EARTH GLOBE ASIA-AUSTRALIA';}*/
+/*i.emoji.EMOJINAME::before{content: '🌐'; title: 'GLOBE WITH MERIDIANS';}*/
+/*i.emoji.EMOJINAME::before{content: '🌑'; title: 'NEW MOON SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🌒'; title: 'WAXING CRESCENT MOON SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🌓'; title: 'FIRST QUARTER MOON SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🌔'; title: 'WAXING GIBBOUS MOON SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🌕'; title: 'FULL MOON SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🌖'; title: 'WANING GIBBOUS MOON SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🌗'; title: 'LAST QUARTER MOON SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🌘'; title: 'WANING CRESCENT MOON SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🌙'; title: 'CRESCENT MOON';}*/
+/*i.emoji.EMOJINAME::before{content: '🌚'; title: 'NEW MOON WITH FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌛'; title: 'FIRST QUARTER MOON WITH FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌜'; title: 'LAST QUARTER MOON WITH FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌝'; title: 'FULL MOON WITH FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌞'; title: 'SUN WITH FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌟'; title: 'GLOWING STAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🌠'; title: 'SHOOTING STAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🌡'; title: 'THERMOMETER';}*/
+/*i.emoji.EMOJINAME::before{content: '🌢'; title: 'BLACK DROPLET';}*/
+/*i.emoji.EMOJINAME::before{content: '🌣'; title: 'WHITE SUN';}*/
+/*i.emoji.EMOJINAME::before{content: '🌤'; title: 'WHITE SUN WITH SMALL CLOUD';}*/
+/*i.emoji.EMOJINAME::before{content: '🌥'; title: 'WHITE SUN BEHIND CLOUD';}*/
+/*i.emoji.EMOJINAME::before{content: '🌦'; title: 'WHITE SUN BEHIND CLOUD WITH RAIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🌧'; title: 'CLOUD WITH RAIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🌨'; title: 'CLOUD WITH SNOW';}*/
+/*i.emoji.EMOJINAME::before{content: '🌩'; title: 'CLOUD WITH LIGHTNING';}*/
+/*i.emoji.EMOJINAME::before{content: '🌪'; title: 'CLOUD WITH TORNADO';}*/
+/*i.emoji.EMOJINAME::before{content: '🌫'; title: 'FOG';}*/
+/*i.emoji.EMOJINAME::before{content: '🌬'; title: 'WIND BLOWING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌭'; title: 'HOT DOG';}*/
+/*i.emoji.EMOJINAME::before{content: '🌮'; title: 'TACO';}*/
+/*i.emoji.EMOJINAME::before{content: '🌯'; title: 'BURRITO';}*/
+/*i.emoji.EMOJINAME::before{content: '🌰'; title: 'CHESTNUT';}*/
+/*i.emoji.EMOJINAME::before{content: '🌱'; title: 'SEEDLING';}*/
+/*i.emoji.EMOJINAME::before{content: '🌲'; title: 'EVERGREEN TREE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌳'; title: 'DECIDUOUS TREE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌴'; title: 'PALM TREE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌵'; title: 'CACTUS';}*/
+/*i.emoji.EMOJINAME::before{content: '🌶'; title: 'HOT PEPPER';}*/
+/*i.emoji.EMOJINAME::before{content: '🌷'; title: 'TULIP';}*/
+/*i.emoji.EMOJINAME::before{content: '🌸'; title: 'CHERRY BLOSSOM';}*/
+/*i.emoji.EMOJINAME::before{content: '🌹'; title: 'ROSE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌺'; title: 'HIBISCUS';}*/
+/*i.emoji.EMOJINAME::before{content: '🌻'; title: 'SUNFLOWER';}*/
+/*i.emoji.EMOJINAME::before{content: '🌼'; title: 'BLOSSOM';}*/
+/*i.emoji.EMOJINAME::before{content: '🌽'; title: 'EAR OF MAIZE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌾'; title: 'EAR OF RICE';}*/
+/*i.emoji.EMOJINAME::before{content: '🌿'; title: 'HERB';}*/
+/*i.emoji.EMOJINAME::before{content: '🍀'; title: 'FOUR LEAF CLOVER';}*/
+/*i.emoji.EMOJINAME::before{content: '🍁'; title: 'MAPLE LEAF';}*/
+/*i.emoji.EMOJINAME::before{content: '🍂'; title: 'FALLEN LEAF';}*/
+/*i.emoji.EMOJINAME::before{content: '🍃'; title: 'LEAF FLUTTERING IN WIND';}*/
+/*i.emoji.EMOJINAME::before{content: '🍄'; title: 'MUSHROOM';}*/
+/*i.emoji.EMOJINAME::before{content: '🍅'; title: 'TOMATO';}*/
+/*i.emoji.EMOJINAME::before{content: '🍆'; title: 'AUBERGINE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍇'; title: 'GRAPES';}*/
+/*i.emoji.EMOJINAME::before{content: '🍈'; title: 'MELON';}*/
+/*i.emoji.EMOJINAME::before{content: '🍉'; title: 'WATERMELON';}*/
+/*i.emoji.EMOJINAME::before{content: '🍊'; title: 'TANGERINE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍋'; title: 'LEMON';}*/
+/*i.emoji.EMOJINAME::before{content: '🍌'; title: 'BANANA';}*/
+/*i.emoji.EMOJINAME::before{content: '🍍'; title: 'PINEAPPLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍎'; title: 'RED APPLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍏'; title: 'GREEN APPLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍐'; title: 'PEAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🍑'; title: 'PEACH';}*/
+/*i.emoji.EMOJINAME::before{content: '🍒'; title: 'CHERRIES';}*/
+/*i.emoji.EMOJINAME::before{content: '🍓'; title: 'STRAWBERRY';}*/
+/*i.emoji.EMOJINAME::before{content: '🍔'; title: 'HAMBURGER';}*/
+/*i.emoji.EMOJINAME::before{content: '🍕'; title: 'SLICE OF PIZZA';}*/
+/*i.emoji.EMOJINAME::before{content: '🍖'; title: 'MEAT ON BONE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍗'; title: 'POULTRY LEG';}*/
+/*i.emoji.EMOJINAME::before{content: '🍘'; title: 'RICE CRACKER';}*/
+/*i.emoji.EMOJINAME::before{content: '🍙'; title: 'RICE BALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🍚'; title: 'COOKED RICE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍛'; title: 'CURRY AND RICE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍜'; title: 'STEAMING BOWL';}*/
+/*i.emoji.EMOJINAME::before{content: '🍝'; title: 'SPAGHETTI';}*/
+/*i.emoji.EMOJINAME::before{content: '🍞'; title: 'BREAD';}*/
+/*i.emoji.EMOJINAME::before{content: '🍟'; title: 'FRENCH FRIES';}*/
+/*i.emoji.EMOJINAME::before{content: '🍠'; title: 'ROASTED SWEET POTATO';}*/
+/*i.emoji.EMOJINAME::before{content: '🍡'; title: 'DANGO';}*/
+/*i.emoji.EMOJINAME::before{content: '🍢'; title: 'ODEN';}*/
+/*i.emoji.EMOJINAME::before{content: '🍣'; title: 'SUSHI';}*/
+/*i.emoji.EMOJINAME::before{content: '🍤'; title: 'FRIED SHRIMP';}*/
+/*i.emoji.EMOJINAME::before{content: '🍥'; title: 'FISH CAKE WITH SWIRL DESIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '🍦'; title: 'SOFT ICE CREAM';}*/
+/*i.emoji.EMOJINAME::before{content: '🍧'; title: 'SHAVED ICE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍨'; title: 'ICE CREAM';}*/
+/*i.emoji.EMOJINAME::before{content: '🍩'; title: 'DOUGHNUT';}*/
+/*i.emoji.EMOJINAME::before{content: '🍪'; title: 'COOKIE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍫'; title: 'CHOCOLATE BAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🍬'; title: 'CANDY';}*/
+/*i.emoji.EMOJINAME::before{content: '🍭'; title: 'LOLLIPOP';}*/
+/*i.emoji.EMOJINAME::before{content: '🍮'; title: 'CUSTARD';}*/
+/*i.emoji.EMOJINAME::before{content: '🍯'; title: 'HONEY POT';}*/
+/*i.emoji.EMOJINAME::before{content: '🍰'; title: 'SHORTCAKE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍱'; title: 'BENTO BOX';}*/
+/*i.emoji.EMOJINAME::before{content: '🍲'; title: 'POT OF FOOD';}*/
+/*i.emoji.EMOJINAME::before{content: '🍳'; title: 'COOKING';}*/
+/*i.emoji.EMOJINAME::before{content: '🍴'; title: 'FORK AND KNIFE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍵'; title: 'TEACUP WITHOUT HANDLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍶'; title: 'SAKE BOTTLE AND CUP';}*/
+/*i.emoji.EMOJINAME::before{content: '🍷'; title: 'WINE GLASS';}*/
+/*i.emoji.EMOJINAME::before{content: '🍸'; title: 'COCKTAIL GLASS';}*/
+/*i.emoji.EMOJINAME::before{content: '🍹'; title: 'TROPICAL DRINK';}*/
+/*i.emoji.EMOJINAME::before{content: '🍺'; title: 'BEER MUG';}*/
+/*i.emoji.EMOJINAME::before{content: '🍻'; title: 'CLINKING BEER MUGS';}*/
+/*i.emoji.EMOJINAME::before{content: '🍼'; title: 'BABY BOTTLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍽'; title: 'FORK AND KNIFE WITH PLATE';}*/
+/*i.emoji.EMOJINAME::before{content: '🍾'; title: 'BOTTLE WITH POPPING CORK';}*/
+/*i.emoji.EMOJINAME::before{content: '🍿'; title: 'POPCORN';}*/
+/*i.emoji.EMOJINAME::before{content: '🎀'; title: 'RIBBON';}*/
+/*i.emoji.EMOJINAME::before{content: '🎁'; title: 'WRAPPED PRESENT';}*/
+/*i.emoji.EMOJINAME::before{content: '🎂'; title: 'BIRTHDAY CAKE';}*/
+i.emoji.jaco::before{content: '🎃'; title: 'JACK-O-LANTERN';}
+/*i.emoji.EMOJINAME::before{content: '🎄'; title: 'CHRISTMAS TREE';}*/
+i.emoji.santa::before{content: '🎅'; title: 'FATHER CHRISTMAS';}
+/*i.emoji.EMOJINAME::before{content: '🎆'; title: 'FIREWORKS';}*/
+/*i.emoji.EMOJINAME::before{content: '🎇'; title: 'FIREWORK SPARKLER';}*/
+/*i.emoji.EMOJINAME::before{content: '🎈'; title: 'BALLOON';}*/
+/*i.emoji.EMOJINAME::before{content: '🎉'; title: 'PARTY POPPER';}*/
+/*i.emoji.EMOJINAME::before{content: '🎊'; title: 'CONFETTI BALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🎋'; title: 'TANABATA TREE';}*/
+/*i.emoji.EMOJINAME::before{content: '🎌'; title: 'CROSSED FLAGS';}*/
+/*i.emoji.EMOJINAME::before{content: '🎍'; title: 'PINE DECORATION';}*/
+/*i.emoji.EMOJINAME::before{content: '🎎'; title: 'JAPANESE DOLLS';}*/
+/*i.emoji.EMOJINAME::before{content: '🎏'; title: 'CARP STREAMER';}*/
+/*i.emoji.EMOJINAME::before{content: '🎐'; title: 'WIND CHIME';}*/
+/*i.emoji.EMOJINAME::before{content: '🎑'; title: 'MOON VIEWING CEREMONY';}*/
+/*i.emoji.EMOJINAME::before{content: '🎒'; title: 'SCHOOL SATCHEL';}*/
+/*i.emoji.EMOJINAME::before{content: '🎓'; title: 'GRADUATION CAP';}*/
+/*i.emoji.EMOJINAME::before{content: '🎔'; title: 'HEART WITH TIP ON THE LEFT';}*/
+/*i.emoji.EMOJINAME::before{content: '🎕'; title: 'BOUQUET OF FLOWERS';}*/
+/*i.emoji.EMOJINAME::before{content: '🎖'; title: 'MILITARY MEDAL';}*/
+/*i.emoji.EMOJINAME::before{content: '🎗'; title: 'REMINDER RIBBON';}*/
+/*i.emoji.EMOJINAME::before{content: '🎘'; title: 'MUSICAL KEYBOARD WITH JACKS';}*/
+/*i.emoji.EMOJINAME::before{content: '🎙'; title: 'STUDIO MICROPHONE';}*/
+/*i.emoji.EMOJINAME::before{content: '🎚'; title: 'LEVEL SLIDER';}*/
+/*i.emoji.EMOJINAME::before{content: '🎛'; title: 'CONTROL KNOBS';}*/
+/*i.emoji.EMOJINAME::before{content: '🎜'; title: 'BEAMED ASCENDING MUSICAL NOTES';}*/
+/*i.emoji.EMOJINAME::before{content: '🎝'; title: 'BEAMED DESCENDING MUSICAL NOTES';}*/
+/*i.emoji.EMOJINAME::before{content: '🎞'; title: 'FILM FRAMES';}*/
+/*i.emoji.EMOJINAME::before{content: '🎟'; title: 'ADMISSION TICKETS';}*/
+/*i.emoji.EMOJINAME::before{content: '🎠'; title: 'CAROUSEL HORSE';}*/
+/*i.emoji.EMOJINAME::before{content: '🎡'; title: 'FERRIS WHEEL';}*/
+/*i.emoji.EMOJINAME::before{content: '🎢'; title: 'ROLLER COASTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🎣'; title: 'FISHING POLE AND FISH';}*/
+/*i.emoji.EMOJINAME::before{content: '🎤'; title: 'MICROPHONE';}*/
+/*i.emoji.EMOJINAME::before{content: '🎥'; title: 'MOVIE CAMERA';}*/
+/*i.emoji.EMOJINAME::before{content: '🎦'; title: 'CINEMA';}*/
+/*i.emoji.EMOJINAME::before{content: '🎧'; title: 'HEADPHONE';}*/
+/*i.emoji.EMOJINAME::before{content: '🎨'; title: 'ARTIST PALETTE';}*/
+/*i.emoji.EMOJINAME::before{content: '🎩'; title: 'TOP HAT';}*/
+/*i.emoji.EMOJINAME::before{content: '🎪'; title: 'CIRCUS TENT';}*/
+/*i.emoji.EMOJINAME::before{content: '🎫'; title: 'TICKET';}*/
+/*i.emoji.EMOJINAME::before{content: '🎬'; title: 'CLAPPER BOARD';}*/
+/*i.emoji.EMOJINAME::before{content: '🎭'; title: 'PERFORMING ARTS';}*/
+/*i.emoji.EMOJINAME::before{content: '🎮'; title: 'VIDEO GAME';}*/
+/*i.emoji.EMOJINAME::before{content: '🎯'; title: 'DIRECT HIT';}*/
+/*i.emoji.EMOJINAME::before{content: '🎰'; title: 'SLOT MACHINE';}*/
+/*i.emoji.EMOJINAME::before{content: '🎱'; title: 'BILLIARDS';}*/
+/*i.emoji.EMOJINAME::before{content: '🎲'; title: 'GAME DIE';}*/
+/*i.emoji.EMOJINAME::before{content: '🎳'; title: 'BOWLING';}*/
+/*i.emoji.EMOJINAME::before{content: '🎴'; title: 'FLOWER PLAYING CARDS';}*/
+/*i.emoji.EMOJINAME::before{content: '🎵'; title: 'MUSICAL NOTE';}*/
+/*i.emoji.EMOJINAME::before{content: '🎶'; title: 'MULTIPLE MUSICAL NOTES';}*/
+/*i.emoji.EMOJINAME::before{content: '🎷'; title: 'SAXOPHONE';}*/
+/*i.emoji.EMOJINAME::before{content: '🎸'; title: 'GUITAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🎹'; title: 'MUSICAL KEYBOARD';}*/
+/*i.emoji.EMOJINAME::before{content: '🎺'; title: 'TRUMPET';}*/
+/*i.emoji.EMOJINAME::before{content: '🎻'; title: 'VIOLIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🎼'; title: 'MUSICAL SCORE';}*/
+/*i.emoji.EMOJINAME::before{content: '🎽'; title: 'RUNNING SHIRT WITH SASH';}*/
+/*i.emoji.EMOJINAME::before{content: '🎾'; title: 'TENNIS RACQUET AND BALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🎿'; title: 'SKI AND SKI BOOT';}*/
+/*i.emoji.EMOJINAME::before{content: '🏀'; title: 'BASKETBALL AND HOOP';}*/
+/*i.emoji.EMOJINAME::before{content: '🏁'; title: 'CHEQUERED FLAG';}*/
+/*i.emoji.EMOJINAME::before{content: '🏂'; title: 'SNOWBOARDER';}*/
+/*i.emoji.EMOJINAME::before{content: '🏃'; title: 'RUNNER';}*/
+/*i.emoji.EMOJINAME::before{content: '🏄'; title: 'SURFER';}*/
+/*i.emoji.EMOJINAME::before{content: '🏅'; title: 'SPORTS MEDAL';}*/
+/*i.emoji.EMOJINAME::before{content: '🏆'; title: 'TROPHY';}*/
+/*i.emoji.EMOJINAME::before{content: '🏇'; title: 'HORSE RACING';}*/
+/*i.emoji.EMOJINAME::before{content: '🏈'; title: 'AMERICAN FOOTBALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🏉'; title: 'RUGBY FOOTBALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🏊'; title: 'SWIMMER';}*/
+/*i.emoji.EMOJINAME::before{content: '🏋'; title: 'WEIGHT LIFTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🏌'; title: 'GOLFER';}*/
+/*i.emoji.EMOJINAME::before{content: '🏍'; title: 'RACING MOTORCYCLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🏎'; title: 'RACING CAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🏏'; title: 'CRICKET BAT AND BALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🏐'; title: 'VOLLEYBALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🏑'; title: 'FIELD HOCKEY STICK AND BALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🏒'; title: 'ICE HOCKEY STICK AND PUCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🏓'; title: 'TABLE TENNIS PADDLE AND BALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🏔'; title: 'SNOW CAPPED MOUNTAIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🏕'; title: 'CAMPING';}*/
+/*i.emoji.EMOJINAME::before{content: '🏖'; title: 'BEACH WITH UMBRELLA';}*/
+/*i.emoji.EMOJINAME::before{content: '🏗'; title: 'BUILDING CONSTRUCTION';}*/
+/*i.emoji.EMOJINAME::before{content: '🏘'; title: 'HOUSE BUILDINGS';}*/
+/*i.emoji.EMOJINAME::before{content: '🏙'; title: 'CITYSCAPE';}*/
+/*i.emoji.EMOJINAME::before{content: '🏚'; title: 'DERELICT HOUSE BUILDING';}*/
+/*i.emoji.EMOJINAME::before{content: '🏛'; title: 'CLASSICAL BUILDING';}*/
+/*i.emoji.EMOJINAME::before{content: '🏜'; title: 'DESERT';}*/
+/*i.emoji.EMOJINAME::before{content: '🏝'; title: 'DESERT ISLAND';}*/
+/*i.emoji.EMOJINAME::before{content: '🏞'; title: 'NATIONAL PARK';}*/
+/*i.emoji.EMOJINAME::before{content: '🏟'; title: 'STADIUM';}*/
+/*i.emoji.EMOJINAME::before{content: '🏠'; title: 'HOUSE BUILDING';}*/
+/*i.emoji.EMOJINAME::before{content: '🏡'; title: 'HOUSE WITH GARDEN';}*/
+/*i.emoji.EMOJINAME::before{content: '🏢'; title: 'OFFICE BUILDING';}*/
+/*i.emoji.EMOJINAME::before{content: '🏣'; title: 'JAPANESE POST OFFICE';}*/
+/*i.emoji.EMOJINAME::before{content: '🏤'; title: 'EUROPEAN POST OFFICE';}*/
+/*i.emoji.EMOJINAME::before{content: '🏥'; title: 'HOSPITAL';}*/
+/*i.emoji.EMOJINAME::before{content: '🏦'; title: 'BANK';}*/
+/*i.emoji.EMOJINAME::before{content: '🏧'; title: 'AUTOMATED TELLER MACHINE';}*/
+/*i.emoji.EMOJINAME::before{content: '🏨'; title: 'HOTEL';}*/
+/*i.emoji.EMOJINAME::before{content: '🏩'; title: 'LOVE HOTEL';}*/
+/*i.emoji.EMOJINAME::before{content: '🏪'; title: 'CONVENIENCE STORE';}*/
+/*i.emoji.EMOJINAME::before{content: '🏫'; title: 'SCHOOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🏬'; title: 'DEPARTMENT STORE';}*/
+/*i.emoji.EMOJINAME::before{content: '🏭'; title: 'FACTORY';}*/
+/*i.emoji.EMOJINAME::before{content: '🏮'; title: 'IZAKAYA LANTERN';}*/
+/*i.emoji.EMOJINAME::before{content: '🏯'; title: 'JAPANESE CASTLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🏰'; title: 'EUROPEAN CASTLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🏱'; title: 'WHITE PENNANT';}*/
+/*i.emoji.EMOJINAME::before{content: '🏲'; title: 'BLACK PENNANT';}*/
+/*i.emoji.EMOJINAME::before{content: '🏳'; title: 'WAVING WHITE FLAG';}*/
+/*i.emoji.EMOJINAME::before{content: '🏴'; title: 'WAVING BLACK FLAG';}*/
+/*i.emoji.EMOJINAME::before{content: '🏵'; title: 'ROSETTE';}*/
+/*i.emoji.EMOJINAME::before{content: '🏶'; title: 'BLACK ROSETTE';}*/
+/*i.emoji.EMOJINAME::before{content: '🏷'; title: 'LABEL';}*/
+/*i.emoji.EMOJINAME::before{content: '🏸'; title: 'BADMINTON RACQUET AND SHUTTLECOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🏹'; title: 'BOW AND ARROW';}*/
+/*i.emoji.EMOJINAME::before{content: '🏺'; title: 'AMPHORA';}*/
+/*i.emoji.EMOJINAME::before{content: '🏻'; title: 'EMOJI MODIFIER FITZPATRICK TYPE-1-2';}*/
+/*i.emoji.EMOJINAME::before{content: '🏼'; title: 'EMOJI MODIFIER FITZPATRICK TYPE-3';}*/
+/*i.emoji.EMOJINAME::before{content: '🏽'; title: 'EMOJI MODIFIER FITZPATRICK TYPE-4';}*/
+/*i.emoji.EMOJINAME::before{content: '🏾'; title: 'EMOJI MODIFIER FITZPATRICK TYPE-5';}*/
+/*i.emoji.EMOJINAME::before{content: '🏿'; title: 'EMOJI MODIFIER FITZPATRICK TYPE-6';}*/
+/*i.emoji.EMOJINAME::before{content: '🐀'; title: 'RAT';}*/
+/*i.emoji.EMOJINAME::before{content: '🐁'; title: 'MOUSE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐂'; title: 'OX';}*/
+/*i.emoji.EMOJINAME::before{content: '🐃'; title: 'WATER BUFFALO';}*/
+/*i.emoji.EMOJINAME::before{content: '🐄'; title: 'COW';}*/
+/*i.emoji.EMOJINAME::before{content: '🐅'; title: 'TIGER';}*/
+/*i.emoji.EMOJINAME::before{content: '🐆'; title: 'LEOPARD';}*/
+/*i.emoji.EMOJINAME::before{content: '🐇'; title: 'RABBIT';}*/
+/*i.emoji.EMOJINAME::before{content: '🐈'; title: 'CAT';}*/
+/*i.emoji.EMOJINAME::before{content: '🐉'; title: 'DRAGON';}*/
+/*i.emoji.EMOJINAME::before{content: '🐊'; title: 'CROCODILE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐋'; title: 'WHALE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐌'; title: 'SNAIL';}*/
+/*i.emoji.EMOJINAME::before{content: '🐍'; title: 'SNAKE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐎'; title: 'HORSE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐏'; title: 'RAM';}*/
+/*i.emoji.EMOJINAME::before{content: '🐐'; title: 'GOAT';}*/
+/*i.emoji.EMOJINAME::before{content: '🐑'; title: 'SHEEP';}*/
+/*i.emoji.EMOJINAME::before{content: '🐒'; title: 'MONKEY';}*/
+/*i.emoji.EMOJINAME::before{content: '🐓'; title: 'ROOSTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🐔'; title: 'CHICKEN';}*/
+/*i.emoji.EMOJINAME::before{content: '🐕'; title: 'DOG';}*/
+/*i.emoji.EMOJINAME::before{content: '🐖'; title: 'PIG';}*/
+/*i.emoji.EMOJINAME::before{content: '🐗'; title: 'BOAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🐘'; title: 'ELEPHANT';}*/
+/*i.emoji.EMOJINAME::before{content: '🐙'; title: 'OCTOPUS';}*/
+/*i.emoji.EMOJINAME::before{content: '🐚'; title: 'SPIRAL SHELL';}*/
+/*i.emoji.EMOJINAME::before{content: '🐛'; title: 'BUG';}*/
+/*i.emoji.EMOJINAME::before{content: '🐜'; title: 'ANT';}*/
+/*i.emoji.EMOJINAME::before{content: '🐝'; title: 'HONEYBEE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐞'; title: 'LADY BEETLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐟'; title: 'FISH';}*/
+/*i.emoji.EMOJINAME::before{content: '🐠'; title: 'TROPICAL FISH';}*/
+/*i.emoji.EMOJINAME::before{content: '🐡'; title: 'BLOWFISH';}*/
+/*i.emoji.EMOJINAME::before{content: '🐢'; title: 'TURTLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐣'; title: 'HATCHING CHICK';}*/
+/*i.emoji.EMOJINAME::before{content: '🐤'; title: 'BABY CHICK';}*/
+/*i.emoji.EMOJINAME::before{content: '🐥'; title: 'FRONT-FACING BABY CHICK';}*/
+/*i.emoji.EMOJINAME::before{content: '🐦'; title: 'BIRD';}*/
+/*i.emoji.EMOJINAME::before{content: '🐧'; title: 'PENGUIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🐨'; title: 'KOALA';}*/
+/*i.emoji.EMOJINAME::before{content: '🐩'; title: 'POODLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐪'; title: 'DROMEDARY CAMEL';}*/
+/*i.emoji.EMOJINAME::before{content: '🐫'; title: 'BACTRIAN CAMEL';}*/
+/*i.emoji.EMOJINAME::before{content: '🐬'; title: 'DOLPHIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🐭'; title: 'MOUSE FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐮'; title: 'COW FACE';}*/
+i.emoji.tiger::before{content: '🐯'; title: 'TIGER FACE';}
+i.emoji.rabbit::before{content: '🐰'; title: 'RABBIT FACE';}
+i.emoji.cat::before{content: '🐱'; title: 'CAT FACE';}
+/*i.emoji.EMOJINAME::before{content: '🐲'; title: 'DRAGON FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐳'; title: 'SPOUTING WHALE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐴'; title: 'HORSE FACE';}*/
+i.emoji.monkey::before{content: '🐵'; title: 'MONKEY FACE';}
+i.emoji.dog::before{content: '🐶'; title: 'DOG FACE';}
+i.emoji.pig::before{content: '🐷'; title: 'PIG FACE';}
+/*i.emoji.EMOJINAME::before{content: '🐸'; title: 'FROG FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐹'; title: 'HAMSTER FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐺'; title: 'WOLF FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐻'; title: 'BEAR FACE';}*/
+i.emoji.panda::before{content: '🐼'; title: 'PANDA FACE';}
+/*i.emoji.EMOJINAME::before{content: '🐽'; title: 'PIG NOSE';}*/
+/*i.emoji.EMOJINAME::before{content: '🐾'; title: 'PAW PRINTS';}*/
+/*i.emoji.EMOJINAME::before{content: '🐿'; title: 'CHIPMUNK';}*/
+/*i.emoji.EMOJINAME::before{content: '👀'; title: 'EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '👁'; title: 'EYE';}*/
+/*i.emoji.EMOJINAME::before{content: '👂'; title: 'EAR';}*/
+/*i.emoji.EMOJINAME::before{content: '👃'; title: 'NOSE';}*/
+/*i.emoji.EMOJINAME::before{content: '👄'; title: 'MOUTH';}*/
+/*i.emoji.EMOJINAME::before{content: '👅'; title: 'TONGUE';}*/
+/*i.emoji.EMOJINAME::before{content: '👆'; title: 'WHITE UP POINTING BACKHAND INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '👇'; title: 'WHITE DOWN POINTING BACKHAND INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '👈'; title: 'WHITE LEFT POINTING BACKHAND INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '👉'; title: 'WHITE RIGHT POINTING BACKHAND INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '👊'; title: 'FISTED HAND SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '👋'; title: 'WAVING HAND SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '👌'; title: 'OK HAND SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '👍'; title: 'THUMBS UP SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '👎'; title: 'THUMBS DOWN SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '👏'; title: 'CLAPPING HANDS SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '👐'; title: 'OPEN HANDS SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '👑'; title: 'CROWN';}*/
+/*i.emoji.EMOJINAME::before{content: '👒'; title: 'WOMANS HAT';}*/
+/*i.emoji.EMOJINAME::before{content: '👓'; title: 'EYEGLASSES';}*/
+/*i.emoji.EMOJINAME::before{content: '👔'; title: 'NECKTIE';}*/
+/*i.emoji.EMOJINAME::before{content: '👕'; title: 'T-SHIRT';}*/
+/*i.emoji.EMOJINAME::before{content: '👖'; title: 'JEANS';}*/
+/*i.emoji.EMOJINAME::before{content: '👗'; title: 'DRESS';}*/
+/*i.emoji.EMOJINAME::before{content: '👘'; title: 'KIMONO';}*/
+/*i.emoji.EMOJINAME::before{content: '👙'; title: 'BIKINI';}*/
+/*i.emoji.EMOJINAME::before{content: '👚'; title: 'WOMANS CLOTHES';}*/
+/*i.emoji.EMOJINAME::before{content: '👛'; title: 'PURSE';}*/
+/*i.emoji.EMOJINAME::before{content: '👜'; title: 'HANDBAG';}*/
+/*i.emoji.EMOJINAME::before{content: '👝'; title: 'POUCH';}*/
+/*i.emoji.EMOJINAME::before{content: '👞'; title: 'MANS SHOE';}*/
+/*i.emoji.EMOJINAME::before{content: '👟'; title: 'ATHLETIC SHOE';}*/
+/*i.emoji.EMOJINAME::before{content: '👠'; title: 'HIGH-HEELED SHOE';}*/
+/*i.emoji.EMOJINAME::before{content: '👡'; title: 'WOMANS SANDAL';}*/
+/*i.emoji.EMOJINAME::before{content: '👢'; title: 'WOMANS BOOTS';}*/
+/*i.emoji.EMOJINAME::before{content: '👣'; title: 'FOOTPRINTS';}*/
+/*i.emoji.EMOJINAME::before{content: '👤'; title: 'BUST IN SILHOUETTE';}*/
+/*i.emoji.EMOJINAME::before{content: '👥'; title: 'BUSTS IN SILHOUETTE';}*/
+/*i.emoji.EMOJINAME::before{content: '👦'; title: 'BOY';}*/
+/*i.emoji.EMOJINAME::before{content: '👧'; title: 'GIRL';}*/
+/*i.emoji.EMOJINAME::before{content: '👨'; title: 'MAN';}*/
+/*i.emoji.EMOJINAME::before{content: '👩'; title: 'WOMAN';}*/
+/*i.emoji.EMOJINAME::before{content: '👪'; title: 'FAMILY';}*/
+/*i.emoji.EMOJINAME::before{content: '👫'; title: 'MAN AND WOMAN HOLDING HANDS';}*/
+/*i.emoji.EMOJINAME::before{content: '👬'; title: 'TWO MEN HOLDING HANDS';}*/
+/*i.emoji.EMOJINAME::before{content: '👭'; title: 'TWO WOMEN HOLDING HANDS';}*/
+/*i.emoji.EMOJINAME::before{content: '👮'; title: 'POLICE OFFICER';}*/
+/*i.emoji.EMOJINAME::before{content: '👯'; title: 'WOMAN WITH BUNNY EARS';}*/
+/*i.emoji.EMOJINAME::before{content: '👰'; title: 'BRIDE WITH VEIL';}*/
+/*i.emoji.EMOJINAME::before{content: '👱'; title: 'PERSON WITH BLOND HAIR';}*/
+/*i.emoji.EMOJINAME::before{content: '👲'; title: 'MAN WITH GUA PI MAO';}*/
+/*i.emoji.EMOJINAME::before{content: '👳'; title: 'MAN WITH TURBAN';}*/
+/*i.emoji.EMOJINAME::before{content: '👴'; title: 'OLDER MAN';}*/
+/*i.emoji.EMOJINAME::before{content: '👵'; title: 'OLDER WOMAN';}*/
+/*i.emoji.EMOJINAME::before{content: '👶'; title: 'BABY';}*/
+/*i.emoji.EMOJINAME::before{content: '👷'; title: 'CONSTRUCTION WORKER';}*/
+/*i.emoji.EMOJINAME::before{content: '👸'; title: 'PRINCESS';}*/
+i.emoji.oni::before{content: '👹'; title: 'JAPANESE OGRE';}
+i.emoji.tengu::before{content: '👺'; title: 'JAPANESE GOBLIN';}
+/*i.emoji.EMOJINAME::before{content: '👻'; title: 'GHOST';}*/
+/*i.emoji.EMOJINAME::before{content: '👼'; title: 'BABY ANGEL';}*/
+/*i.emoji.EMOJINAME::before{content: '👽'; title: 'EXTRATERRESTRIAL ALIEN';}*/
+/*i.emoji.EMOJINAME::before{content: '👾'; title: 'ALIEN MONSTER';}*/
+/*i.emoji.EMOJINAME::before{content: '👿'; title: 'IMP';}*/
+i.emoji.skull::before{content: '💀'; title: 'SKULL';}
+/*i.emoji.EMOJINAME::before{content: '💁'; title: 'INFORMATION DESK PERSON';}*/
+/*i.emoji.EMOJINAME::before{content: '💂'; title: 'GUARDSMAN';}*/
+/*i.emoji.EMOJINAME::before{content: '💃'; title: 'DANCER';}*/
+/*i.emoji.EMOJINAME::before{content: '💄'; title: 'LIPSTICK';}*/
+/*i.emoji.EMOJINAME::before{content: '💅'; title: 'NAIL POLISH';}*/
+/*i.emoji.EMOJINAME::before{content: '💆'; title: 'FACE MASSAGE';}*/
+/*i.emoji.EMOJINAME::before{content: '💇'; title: 'HAIRCUT';}*/
+/*i.emoji.EMOJINAME::before{content: '💈'; title: 'BARBER POLE';}*/
+/*i.emoji.EMOJINAME::before{content: '💉'; title: 'SYRINGE';}*/
+/*i.emoji.EMOJINAME::before{content: '💊'; title: 'PILL';}*/
+/*i.emoji.EMOJINAME::before{content: '💋'; title: 'KISS MARK';}*/
+/*i.emoji.EMOJINAME::before{content: '💌'; title: 'LOVE LETTER';}*/
+/*i.emoji.EMOJINAME::before{content: '💍'; title: 'RING';}*/
+/*i.emoji.EMOJINAME::before{content: '💎'; title: 'GEM STONE';}*/
+/*i.emoji.EMOJINAME::before{content: '💏'; title: 'KISS';}*/
+/*i.emoji.EMOJINAME::before{content: '💐'; title: 'BOUQUET';}*/
+/*i.emoji.EMOJINAME::before{content: '💑'; title: 'COUPLE WITH HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '💒'; title: 'WEDDING';}*/
+/*i.emoji.EMOJINAME::before{content: '💓'; title: 'BEATING HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '💔'; title: 'BROKEN HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '💕'; title: 'TWO HEARTS';}*/
+/*i.emoji.EMOJINAME::before{content: '💖'; title: 'SPARKLING HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '💗'; title: 'GROWING HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '💘'; title: 'HEART WITH ARROW';}*/
+/*i.emoji.EMOJINAME::before{content: '💙'; title: 'BLUE HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '💚'; title: 'GREEN HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '💛'; title: 'YELLOW HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '💜'; title: 'PURPLE HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '💝'; title: 'HEART WITH RIBBON';}*/
+/*i.emoji.EMOJINAME::before{content: '💞'; title: 'REVOLVING HEARTS';}*/
+/*i.emoji.EMOJINAME::before{content: '💟'; title: 'HEART DECORATION';}*/
+/*i.emoji.EMOJINAME::before{content: '💠'; title: 'DIAMOND SHAPE WITH A DOT INSIDE';}*/
+/*i.emoji.EMOJINAME::before{content: '💡'; title: 'ELECTRIC LIGHT BULB';}*/
+/*i.emoji.EMOJINAME::before{content: '💢'; title: 'ANGER SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '💣'; title: 'BOMB';}*/
+/*i.emoji.EMOJINAME::before{content: '💤'; title: 'SLEEPING SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '💥'; title: 'COLLISION SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '💦'; title: 'SPLASHING SWEAT SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '💧'; title: 'DROPLET';}*/
+/*i.emoji.EMOJINAME::before{content: '💨'; title: 'DASH SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '💩'; title: 'PILE OF POO';}*/
+/*i.emoji.EMOJINAME::before{content: '💪'; title: 'FLEXED BICEPS';}*/
+/*i.emoji.EMOJINAME::before{content: '💫'; title: 'DIZZY SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '💬'; title: 'SPEECH BALLOON';}*/
+/*i.emoji.EMOJINAME::before{content: '💭'; title: 'THOUGHT BALLOON';}*/
+/*i.emoji.EMOJINAME::before{content: '💮'; title: 'WHITE FLOWER';}*/
+/*i.emoji.EMOJINAME::before{content: '💯'; title: 'HUNDRED POINTS SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '💰'; title: 'MONEY BAG';}*/
+/*i.emoji.EMOJINAME::before{content: '💱'; title: 'CURRENCY EXCHANGE';}*/
+/*i.emoji.EMOJINAME::before{content: '💲'; title: 'HEAVY DOLLAR SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '💳'; title: 'CREDIT CARD';}*/
+/*i.emoji.EMOJINAME::before{content: '💴'; title: 'BANKNOTE WITH YEN SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '💵'; title: 'BANKNOTE WITH DOLLAR SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '💶'; title: 'BANKNOTE WITH EURO SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '💷'; title: 'BANKNOTE WITH POUND SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '💸'; title: 'MONEY WITH WINGS';}*/
+/*i.emoji.EMOJINAME::before{content: '💹'; title: 'CHART WITH UPWARDS TREND AND YEN SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '💺'; title: 'SEAT';}*/
+/*i.emoji.EMOJINAME::before{content: '💻'; title: 'PERSONAL COMPUTER';}*/
+/*i.emoji.EMOJINAME::before{content: '💼'; title: 'BRIEFCASE';}*/
+/*i.emoji.EMOJINAME::before{content: '💽'; title: 'MINIDISC';}*/
+/*i.emoji.EMOJINAME::before{content: '💾'; title: 'FLOPPY DISK';}*/
+/*i.emoji.EMOJINAME::before{content: '💿'; title: 'OPTICAL DISC';}*/
+/*i.emoji.EMOJINAME::before{content: '📀'; title: 'DVD';}*/
+/*i.emoji.EMOJINAME::before{content: '📁'; title: 'FILE FOLDER';}*/
+/*i.emoji.EMOJINAME::before{content: '📂'; title: 'OPEN FILE FOLDER';}*/
+/*i.emoji.EMOJINAME::before{content: '📃'; title: 'PAGE WITH CURL';}*/
+/*i.emoji.EMOJINAME::before{content: '📄'; title: 'PAGE FACING UP';}*/
+/*i.emoji.EMOJINAME::before{content: '📅'; title: 'CALENDAR';}*/
+/*i.emoji.EMOJINAME::before{content: '📆'; title: 'TEAR-OFF CALENDAR';}*/
+/*i.emoji.EMOJINAME::before{content: '📇'; title: 'CARD INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '📈'; title: 'CHART WITH UPWARDS TREND';}*/
+/*i.emoji.EMOJINAME::before{content: '📉'; title: 'CHART WITH DOWNWARDS TREND';}*/
+/*i.emoji.EMOJINAME::before{content: '📊'; title: 'BAR CHART';}*/
+/*i.emoji.EMOJINAME::before{content: '📋'; title: 'CLIPBOARD';}*/
+/*i.emoji.EMOJINAME::before{content: '📌'; title: 'PUSHPIN';}*/
+/*i.emoji.EMOJINAME::before{content: '📍'; title: 'ROUND PUSHPIN';}*/
+/*i.emoji.EMOJINAME::before{content: '📎'; title: 'PAPERCLIP';}*/
+/*i.emoji.EMOJINAME::before{content: '📏'; title: 'STRAIGHT RULER';}*/
+/*i.emoji.EMOJINAME::before{content: '📐'; title: 'TRIANGULAR RULER';}*/
+/*i.emoji.EMOJINAME::before{content: '📑'; title: 'BOOKMARK TABS';}*/
+/*i.emoji.EMOJINAME::before{content: '📒'; title: 'LEDGER';}*/
+/*i.emoji.EMOJINAME::before{content: '📓'; title: 'NOTEBOOK';}*/
+/*i.emoji.EMOJINAME::before{content: '📔'; title: 'NOTEBOOK WITH DECORATIVE COVER';}*/
+/*i.emoji.EMOJINAME::before{content: '📕'; title: 'CLOSED BOOK';}*/
+/*i.emoji.EMOJINAME::before{content: '📖'; title: 'OPEN BOOK';}*/
+/*i.emoji.EMOJINAME::before{content: '📗'; title: 'GREEN BOOK';}*/
+/*i.emoji.EMOJINAME::before{content: '📘'; title: 'BLUE BOOK';}*/
+/*i.emoji.EMOJINAME::before{content: '📙'; title: 'ORANGE BOOK';}*/
+/*i.emoji.EMOJINAME::before{content: '📚'; title: 'BOOKS';}*/
+/*i.emoji.EMOJINAME::before{content: '📛'; title: 'NAME BADGE';}*/
+/*i.emoji.EMOJINAME::before{content: '📜'; title: 'SCROLL';}*/
+/*i.emoji.EMOJINAME::before{content: '📝'; title: 'MEMO';}*/
+/*i.emoji.EMOJINAME::before{content: '📞'; title: 'TELEPHONE RECEIVER';}*/
+/*i.emoji.EMOJINAME::before{content: '📟'; title: 'PAGER';}*/
+/*i.emoji.EMOJINAME::before{content: '📠'; title: 'FAX MACHINE';}*/
+/*i.emoji.EMOJINAME::before{content: '📡'; title: 'SATELLITE ANTENNA';}*/
+/*i.emoji.EMOJINAME::before{content: '📢'; title: 'PUBLIC ADDRESS LOUDSPEAKER';}*/
+/*i.emoji.EMOJINAME::before{content: '📣'; title: 'CHEERING MEGAPHONE';}*/
+/*i.emoji.EMOJINAME::before{content: '📤'; title: 'OUTBOX TRAY';}*/
+/*i.emoji.EMOJINAME::before{content: '📥'; title: 'INBOX TRAY';}*/
+/*i.emoji.EMOJINAME::before{content: '📦'; title: 'PACKAGE';}*/
+/*i.emoji.EMOJINAME::before{content: '📧'; title: 'E-MAIL SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '📨'; title: 'INCOMING ENVELOPE';}*/
+/*i.emoji.EMOJINAME::before{content: '📩'; title: 'ENVELOPE WITH DOWNWARDS ARROW ABOVE';}*/
+/*i.emoji.EMOJINAME::before{content: '📪'; title: 'CLOSED MAILBOX WITH LOWERED FLAG';}*/
+/*i.emoji.EMOJINAME::before{content: '📫'; title: 'CLOSED MAILBOX WITH RAISED FLAG';}*/
+/*i.emoji.EMOJINAME::before{content: '📬'; title: 'OPEN MAILBOX WITH RAISED FLAG';}*/
+/*i.emoji.EMOJINAME::before{content: '📭'; title: 'OPEN MAILBOX WITH LOWERED FLAG';}*/
+/*i.emoji.EMOJINAME::before{content: '📮'; title: 'POSTBOX';}*/
+/*i.emoji.EMOJINAME::before{content: '📯'; title: 'POSTAL HORN';}*/
+/*i.emoji.EMOJINAME::before{content: '📰'; title: 'NEWSPAPER';}*/
+/*i.emoji.EMOJINAME::before{content: '📱'; title: 'MOBILE PHONE';}*/
+/*i.emoji.EMOJINAME::before{content: '📲'; title: 'MOBILE PHONE WITH RIGHTWARDS ARROW AT LEFT';}*/
+/*i.emoji.EMOJINAME::before{content: '📳'; title: 'VIBRATION MODE';}*/
+/*i.emoji.EMOJINAME::before{content: '📴'; title: 'MOBILE PHONE OFF';}*/
+/*i.emoji.EMOJINAME::before{content: '📵'; title: 'NO MOBILE PHONES';}*/
+/*i.emoji.EMOJINAME::before{content: '📶'; title: 'ANTENNA WITH BARS';}*/
+/*i.emoji.EMOJINAME::before{content: '📷'; title: 'CAMERA';}*/
+/*i.emoji.EMOJINAME::before{content: '📸'; title: 'CAMERA WITH FLASH';}*/
+/*i.emoji.EMOJINAME::before{content: '📹'; title: 'VIDEO CAMERA';}*/
+/*i.emoji.EMOJINAME::before{content: '📺'; title: 'TELEVISION';}*/
+/*i.emoji.EMOJINAME::before{content: '📻'; title: 'RADIO';}*/
+/*i.emoji.EMOJINAME::before{content: '📼'; title: 'VIDEOCASSETTE';}*/
+/*i.emoji.EMOJINAME::before{content: '📽'; title: 'FILM PROJECTOR';}*/
+/*i.emoji.EMOJINAME::before{content: '📾'; title: 'PORTABLE STEREO';}*/
+/*i.emoji.EMOJINAME::before{content: '📿'; title: 'PRAYER BEADS';}*/
+/*i.emoji.EMOJINAME::before{content: '🔀'; title: 'TWISTED RIGHTWARDS ARROWS';}*/
+/*i.emoji.EMOJINAME::before{content: '🔁'; title: 'CLOCKWISE RIGHTWARDS AND LEFTWARDS OPEN CIRCLE ARROWS';}*/
+/*i.emoji.EMOJINAME::before{content: '🔂'; title: 'CLOCKWISE RIGHTWARDS AND LEFTWARDS OPEN CIRCLE ARROWS WITH CIRCLED ONE OVERLAY';}*/
+/*i.emoji.EMOJINAME::before{content: '🔃'; title: 'CLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS';}*/
+/*i.emoji.EMOJINAME::before{content: '🔄'; title: 'ANTICLOCKWISE DOWNWARDS AND UPWARDS OPEN CIRCLE ARROWS';}*/
+/*i.emoji.EMOJINAME::before{content: '🔅'; title: 'LOW BRIGHTNESS SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🔆'; title: 'HIGH BRIGHTNESS SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🔇'; title: 'SPEAKER WITH CANCELLATION STROKE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔈'; title: 'SPEAKER';}*/
+/*i.emoji.EMOJINAME::before{content: '🔉'; title: 'SPEAKER WITH ONE SOUND WAVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔊'; title: 'SPEAKER WITH THREE SOUND WAVES';}*/
+/*i.emoji.EMOJINAME::before{content: '🔋'; title: 'BATTERY';}*/
+/*i.emoji.EMOJINAME::before{content: '🔌'; title: 'ELECTRIC PLUG';}*/
+/*i.emoji.EMOJINAME::before{content: '🔍'; title: 'LEFT-POINTING MAGNIFYING GLASS';}*/
+/*i.emoji.EMOJINAME::before{content: '🔎'; title: 'RIGHT-POINTING MAGNIFYING GLASS';}*/
+/*i.emoji.EMOJINAME::before{content: '🔏'; title: 'LOCK WITH INK PEN';}*/
+/*i.emoji.EMOJINAME::before{content: '🔐'; title: 'CLOSED LOCK WITH KEY';}*/
+/*i.emoji.EMOJINAME::before{content: '🔑'; title: 'KEY';}*/
+/*i.emoji.EMOJINAME::before{content: '🔒'; title: 'LOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🔓'; title: 'OPEN LOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🔔'; title: 'BELL';}*/
+/*i.emoji.EMOJINAME::before{content: '🔕'; title: 'BELL WITH CANCELLATION STROKE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔖'; title: 'BOOKMARK';}*/
+/*i.emoji.EMOJINAME::before{content: '🔗'; title: 'LINK SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🔘'; title: 'RADIO BUTTON';}*/
+/*i.emoji.EMOJINAME::before{content: '🔙'; title: 'BACK WITH LEFTWARDS ARROW ABOVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔚'; title: 'END WITH LEFTWARDS ARROW ABOVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔛'; title: 'ON WITH EXCLAMATION MARK WITH LEFT RIGHT ARROW ABOVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔜'; title: 'SOON WITH RIGHTWARDS ARROW ABOVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔝'; title: 'TOP WITH UPWARDS ARROW ABOVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔞'; title: 'NO ONE UNDER EIGHTEEN SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🔟'; title: 'KEYCAP TEN';}*/
+/*i.emoji.EMOJINAME::before{content: '🔠'; title: 'INPUT SYMBOL FOR LATIN CAPITAL LETTERS';}*/
+/*i.emoji.EMOJINAME::before{content: '🔡'; title: 'INPUT SYMBOL FOR LATIN SMALL LETTERS';}*/
+/*i.emoji.EMOJINAME::before{content: '🔢'; title: 'INPUT SYMBOL FOR NUMBERS';}*/
+/*i.emoji.EMOJINAME::before{content: '🔣'; title: 'INPUT SYMBOL FOR SYMBOLS';}*/
+/*i.emoji.EMOJINAME::before{content: '🔤'; title: 'INPUT SYMBOL FOR LATIN LETTERS';}*/
+/*i.emoji.EMOJINAME::before{content: '🔥'; title: 'FIRE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔦'; title: 'ELECTRIC TORCH';}*/
+/*i.emoji.EMOJINAME::before{content: '🔧'; title: 'WRENCH';}*/
+/*i.emoji.EMOJINAME::before{content: '🔨'; title: 'HAMMER';}*/
+/*i.emoji.EMOJINAME::before{content: '🔩'; title: 'NUT AND BOLT';}*/
+/*i.emoji.EMOJINAME::before{content: '🔪'; title: 'HOCHO';}*/
+/*i.emoji.EMOJINAME::before{content: '🔫'; title: 'PISTOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🔬'; title: 'MICROSCOPE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔭'; title: 'TELESCOPE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔮'; title: 'CRYSTAL BALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🔯'; title: 'SIX POINTED STAR WITH MIDDLE DOT';}*/
+/*i.emoji.EMOJINAME::before{content: '🔰'; title: 'JAPANESE SYMBOL FOR BEGINNER';}*/
+/*i.emoji.EMOJINAME::before{content: '🔱'; title: 'TRIDENT EMBLEM';}*/
+/*i.emoji.EMOJINAME::before{content: '🔲'; title: 'BLACK SQUARE BUTTON';}*/
+/*i.emoji.EMOJINAME::before{content: '🔳'; title: 'WHITE SQUARE BUTTON';}*/
+/*i.emoji.EMOJINAME::before{content: '🔴'; title: 'LARGE RED CIRCLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔵'; title: 'LARGE BLUE CIRCLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔶'; title: 'LARGE ORANGE DIAMOND';}*/
+/*i.emoji.EMOJINAME::before{content: '🔷'; title: 'LARGE BLUE DIAMOND';}*/
+/*i.emoji.EMOJINAME::before{content: '🔸'; title: 'SMALL ORANGE DIAMOND';}*/
+/*i.emoji.EMOJINAME::before{content: '🔹'; title: 'SMALL BLUE DIAMOND';}*/
+/*i.emoji.EMOJINAME::before{content: '🔺'; title: 'UP-POINTING RED TRIANGLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔻'; title: 'DOWN-POINTING RED TRIANGLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔼'; title: 'UP-POINTING SMALL RED TRIANGLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔽'; title: 'DOWN-POINTING SMALL RED TRIANGLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔾'; title: 'LOWER RIGHT SHADOWED WHITE CIRCLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🔿'; title: 'UPPER RIGHT SHADOWED WHITE CIRCLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🕀'; title: 'CIRCLED CROSS POMMEE';}*/
+/*i.emoji.EMOJINAME::before{content: '🕁'; title: 'CROSS POMMEE WITH HALF-CIRCLE BELOW';}*/
+/*i.emoji.EMOJINAME::before{content: '🕂'; title: 'CROSS POMMEE';}*/
+/*i.emoji.EMOJINAME::before{content: '🕃'; title: 'NOTCHED LEFT SEMICIRCLE WITH THREE DOTS';}*/
+/*i.emoji.EMOJINAME::before{content: '🕄'; title: 'NOTCHED RIGHT SEMICIRCLE WITH THREE DOTS';}*/
+/*i.emoji.EMOJINAME::before{content: '🕅'; title: 'SYMBOL FOR MARKS CHAPTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🕆'; title: 'WHITE LATIN CROSS';}*/
+/*i.emoji.EMOJINAME::before{content: '🕇'; title: 'HEAVY LATIN CROSS';}*/
+/*i.emoji.EMOJINAME::before{content: '🕈'; title: 'CELTIC CROSS';}*/
+/*i.emoji.EMOJINAME::before{content: '🕉'; title: 'OM SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🕊'; title: 'DOVE OF PEACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🕋'; title: 'KAABA';}*/
+/*i.emoji.EMOJINAME::before{content: '🕌'; title: 'MOSQUE';}*/
+/*i.emoji.EMOJINAME::before{content: '🕍'; title: 'SYNAGOGUE';}*/
+/*i.emoji.EMOJINAME::before{content: '🕎'; title: 'MENORAH WITH NINE BRANCHES';}*/
+/*i.emoji.EMOJINAME::before{content: '🕏'; title: 'BOWL OF HYGIEIA';}*/
+/*i.emoji.EMOJINAME::before{content: '🕐'; title: 'CLOCK FACE ONE OCLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕑'; title: 'CLOCK FACE TWO OCLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕒'; title: 'CLOCK FACE THREE OCLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕓'; title: 'CLOCK FACE FOUR OCLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕔'; title: 'CLOCK FACE FIVE OCLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕕'; title: 'CLOCK FACE SIX OCLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕖'; title: 'CLOCK FACE SEVEN OCLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕗'; title: 'CLOCK FACE EIGHT OCLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕘'; title: 'CLOCK FACE NINE OCLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕙'; title: 'CLOCK FACE TEN OCLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕚'; title: 'CLOCK FACE ELEVEN OCLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕛'; title: 'CLOCK FACE TWELVE OCLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕜'; title: 'CLOCK FACE ONE-THIRTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕝'; title: 'CLOCK FACE TWO-THIRTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕞'; title: 'CLOCK FACE THREE-THIRTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕟'; title: 'CLOCK FACE FOUR-THIRTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕠'; title: 'CLOCK FACE FIVE-THIRTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕡'; title: 'CLOCK FACE SIX-THIRTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕢'; title: 'CLOCK FACE SEVEN-THIRTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕣'; title: 'CLOCK FACE EIGHT-THIRTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕤'; title: 'CLOCK FACE NINE-THIRTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕥'; title: 'CLOCK FACE TEN-THIRTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕦'; title: 'CLOCK FACE ELEVEN-THIRTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕧'; title: 'CLOCK FACE TWELVE-THIRTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕨'; title: 'RIGHT SPEAKER';}*/
+/*i.emoji.EMOJINAME::before{content: '🕩'; title: 'RIGHT SPEAKER WITH ONE SOUND WAVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🕪'; title: 'RIGHT SPEAKER WITH THREE SOUND WAVES';}*/
+/*i.emoji.EMOJINAME::before{content: '🕫'; title: 'BULLHORN';}*/
+/*i.emoji.EMOJINAME::before{content: '🕬'; title: 'BULLHORN WITH SOUND WAVES';}*/
+/*i.emoji.EMOJINAME::before{content: '🕭'; title: 'RINGING BELL';}*/
+/*i.emoji.EMOJINAME::before{content: '🕮'; title: 'BOOK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕯'; title: 'CANDLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🕰'; title: 'MANTELPIECE CLOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕱'; title: 'BLACK SKULL AND CROSSBONES';}*/
+/*i.emoji.EMOJINAME::before{content: '🕲'; title: 'NO PIRACY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕳'; title: 'HOLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🕴'; title: 'MAN IN BUSINESS SUIT LEVITATING';}*/
+/*i.emoji.EMOJINAME::before{content: '🕵'; title: 'SLEUTH OR SPY';}*/
+/*i.emoji.EMOJINAME::before{content: '🕶'; title: 'DARK SUNGLASSES';}*/
+/*i.emoji.EMOJINAME::before{content: '🕷'; title: 'SPIDER';}*/
+/*i.emoji.EMOJINAME::before{content: '🕸'; title: 'SPIDER WEB';}*/
+/*i.emoji.EMOJINAME::before{content: '🕹'; title: 'JOYSTICK';}*/
+/*i.emoji.EMOJINAME::before{content: '🕺'; title: 'MAN DANCING';}*/
+/*i.emoji.EMOJINAME::before{content: '🕻'; title: 'LEFT HAND TELEPHONE RECEIVER';}*/
+/*i.emoji.EMOJINAME::before{content: '🕼'; title: 'TELEPHONE RECEIVER WITH PAGE';}*/
+/*i.emoji.EMOJINAME::before{content: '🕽'; title: 'RIGHT HAND TELEPHONE RECEIVER';}*/
+/*i.emoji.EMOJINAME::before{content: '🕾'; title: 'WHITE TOUCHTONE TELEPHONE';}*/
+/*i.emoji.EMOJINAME::before{content: '🕿'; title: 'BLACK TOUCHTONE TELEPHONE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖀'; title: 'TELEPHONE ON TOP OF MODEM';}*/
+/*i.emoji.EMOJINAME::before{content: '🖁'; title: 'CLAMSHELL MOBILE PHONE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖂'; title: 'BACK OF ENVELOPE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖃'; title: 'STAMPED ENVELOPE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖄'; title: 'ENVELOPE WITH LIGHTNING';}*/
+/*i.emoji.EMOJINAME::before{content: '🖅'; title: 'FLYING ENVELOPE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖆'; title: 'PEN OVER STAMPED ENVELOPE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖇'; title: 'LINKED PAPERCLIPS';}*/
+/*i.emoji.EMOJINAME::before{content: '🖈'; title: 'BLACK PUSHPIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🖉'; title: 'LOWER LEFT PENCIL';}*/
+/*i.emoji.EMOJINAME::before{content: '🖊'; title: 'LOWER LEFT BALLPOINT PEN';}*/
+/*i.emoji.EMOJINAME::before{content: '🖋'; title: 'LOWER LEFT FOUNTAIN PEN';}*/
+/*i.emoji.EMOJINAME::before{content: '🖌'; title: 'LOWER LEFT PAINTBRUSH';}*/
+/*i.emoji.EMOJINAME::before{content: '🖍'; title: 'LOWER LEFT CRAYON';}*/
+/*i.emoji.EMOJINAME::before{content: '🖎'; title: 'LEFT WRITING HAND';}*/
+/*i.emoji.EMOJINAME::before{content: '🖏'; title: 'TURNED OK HAND SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '🖐'; title: 'RAISED HAND WITH FINGERS SPLAYED';}*/
+/*i.emoji.EMOJINAME::before{content: '🖑'; title: 'REVERSED RAISED HAND WITH FINGERS SPLAYED';}*/
+/*i.emoji.EMOJINAME::before{content: '🖒'; title: 'REVERSED THUMBS UP SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '🖓'; title: 'REVERSED THUMBS DOWN SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '🖔'; title: 'REVERSED VICTORY HAND';}*/
+/*i.emoji.EMOJINAME::before{content: '🖕'; title: 'REVERSED HAND WITH MIDDLE FINGER EXTENDED';}*/
+/*i.emoji.EMOJINAME::before{content: '🖖'; title: 'RAISED HAND WITH PART BETWEEN MIDDLE AND RING FINGERS';}*/
+/*i.emoji.EMOJINAME::before{content: '🖗'; title: 'WHITE DOWN POINTING LEFT HAND INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖘'; title: 'SIDEWAYS WHITE LEFT POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖙'; title: 'SIDEWAYS WHITE RIGHT POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖚'; title: 'SIDEWAYS BLACK LEFT POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖛'; title: 'SIDEWAYS BLACK RIGHT POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖜'; title: 'BLACK LEFT POINTING BACKHAND INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖝'; title: 'BLACK RIGHT POINTING BACKHAND INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖞'; title: 'SIDEWAYS WHITE UP POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖟'; title: 'SIDEWAYS WHITE DOWN POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖠'; title: 'SIDEWAYS BLACK UP POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖡'; title: 'SIDEWAYS BLACK DOWN POINTING INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖢'; title: 'BLACK UP POINTING BACKHAND INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖣'; title: 'BLACK DOWN POINTING BACKHAND INDEX';}*/
+/*i.emoji.EMOJINAME::before{content: '🖤'; title: 'BLACK HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '🖥'; title: 'DESKTOP COMPUTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🖦'; title: 'KEYBOARD AND MOUSE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖧'; title: 'THREE NETWORKED COMPUTERS';}*/
+/*i.emoji.EMOJINAME::before{content: '🖨'; title: 'PRINTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🖩'; title: 'POCKET CALCULATOR';}*/
+/*i.emoji.EMOJINAME::before{content: '🖪'; title: 'BLACK HARD SHELL FLOPPY DISK';}*/
+/*i.emoji.EMOJINAME::before{content: '🖫'; title: 'WHITE HARD SHELL FLOPPY DISK';}*/
+/*i.emoji.EMOJINAME::before{content: '🖬'; title: 'SOFT SHELL FLOPPY DISK';}*/
+/*i.emoji.EMOJINAME::before{content: '🖭'; title: 'TAPE CARTRIDGE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖮'; title: 'WIRED KEYBOARD';}*/
+/*i.emoji.EMOJINAME::before{content: '🖯'; title: 'ONE BUTTON MOUSE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖰'; title: 'TWO BUTTON MOUSE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖱'; title: 'THREE BUTTON MOUSE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖲'; title: 'TRACKBALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🖳'; title: 'OLD PERSONAL COMPUTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🖴'; title: 'HARD DISK';}*/
+/*i.emoji.EMOJINAME::before{content: '🖵'; title: 'SCREEN';}*/
+/*i.emoji.EMOJINAME::before{content: '🖶'; title: 'PRINTER ICON';}*/
+/*i.emoji.EMOJINAME::before{content: '🖷'; title: 'FAX ICON';}*/
+/*i.emoji.EMOJINAME::before{content: '🖸'; title: 'OPTICAL DISC ICON';}*/
+/*i.emoji.EMOJINAME::before{content: '🖹'; title: 'DOCUMENT WITH TEXT';}*/
+/*i.emoji.EMOJINAME::before{content: '🖺'; title: 'DOCUMENT WITH TEXT AND PICTURE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖻'; title: 'DOCUMENT WITH PICTURE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖼'; title: 'FRAME WITH PICTURE';}*/
+/*i.emoji.EMOJINAME::before{content: '🖽'; title: 'FRAME WITH TILES';}*/
+/*i.emoji.EMOJINAME::before{content: '🖾'; title: 'FRAME WITH AN X';}*/
+/*i.emoji.EMOJINAME::before{content: '🖿'; title: 'BLACK FOLDER';}*/
+/*i.emoji.EMOJINAME::before{content: '🗀'; title: 'FOLDER';}*/
+/*i.emoji.EMOJINAME::before{content: '🗁'; title: 'OPEN FOLDER';}*/
+/*i.emoji.EMOJINAME::before{content: '🗂'; title: 'CARD INDEX DIVIDERS';}*/
+/*i.emoji.EMOJINAME::before{content: '🗃'; title: 'CARD FILE BOX';}*/
+/*i.emoji.EMOJINAME::before{content: '🗄'; title: 'FILE CABINET';}*/
+/*i.emoji.EMOJINAME::before{content: '🗅'; title: 'EMPTY NOTE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗆'; title: 'EMPTY NOTE PAGE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗇'; title: 'EMPTY NOTE PAD';}*/
+/*i.emoji.EMOJINAME::before{content: '🗈'; title: 'NOTE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗉'; title: 'NOTE PAGE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗊'; title: 'NOTE PAD';}*/
+/*i.emoji.EMOJINAME::before{content: '🗋'; title: 'EMPTY DOCUMENT';}*/
+/*i.emoji.EMOJINAME::before{content: '🗌'; title: 'EMPTY PAGE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗍'; title: 'EMPTY PAGES';}*/
+/*i.emoji.EMOJINAME::before{content: '🗎'; title: 'DOCUMENT';}*/
+/*i.emoji.EMOJINAME::before{content: '🗏'; title: 'PAGE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗐'; title: 'PAGES';}*/
+/*i.emoji.EMOJINAME::before{content: '🗑'; title: 'WASTEBASKET';}*/
+/*i.emoji.EMOJINAME::before{content: '🗒'; title: 'SPIRAL NOTE PAD';}*/
+/*i.emoji.EMOJINAME::before{content: '🗓'; title: 'SPIRAL CALENDAR PAD';}*/
+/*i.emoji.EMOJINAME::before{content: '🗔'; title: 'DESKTOP WINDOW';}*/
+/*i.emoji.EMOJINAME::before{content: '🗕'; title: 'MINIMIZE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗖'; title: 'MAXIMIZE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗗'; title: 'OVERLAP';}*/
+/*i.emoji.EMOJINAME::before{content: '🗘'; title: 'CLOCKWISE RIGHT AND LEFT SEMICIRCLE ARROWS';}*/
+/*i.emoji.EMOJINAME::before{content: '🗙'; title: 'CANCELLATION X';}*/
+/*i.emoji.EMOJINAME::before{content: '🗚'; title: 'INCREASE FONT SIZE SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🗛'; title: 'DECREASE FONT SIZE SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🗜'; title: 'COMPRESSION';}*/
+/*i.emoji.EMOJINAME::before{content: '🗝'; title: 'OLD KEY';}*/
+/*i.emoji.EMOJINAME::before{content: '🗞'; title: 'ROLLED-UP NEWSPAPER';}*/
+/*i.emoji.EMOJINAME::before{content: '🗟'; title: 'PAGE WITH CIRCLED TEXT';}*/
+/*i.emoji.EMOJINAME::before{content: '🗠'; title: 'STOCK CHART';}*/
+/*i.emoji.EMOJINAME::before{content: '🗡'; title: 'DAGGER KNIFE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗢'; title: 'LIPS';}*/
+/*i.emoji.EMOJINAME::before{content: '🗣'; title: 'SPEAKING HEAD IN SILHOUETTE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗤'; title: 'THREE RAYS ABOVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗥'; title: 'THREE RAYS BELOW';}*/
+/*i.emoji.EMOJINAME::before{content: '🗦'; title: 'THREE RAYS LEFT';}*/
+/*i.emoji.EMOJINAME::before{content: '🗧'; title: 'THREE RAYS RIGHT';}*/
+/*i.emoji.EMOJINAME::before{content: '🗨'; title: 'LEFT SPEECH BUBBLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗩'; title: 'RIGHT SPEECH BUBBLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗪'; title: 'TWO SPEECH BUBBLES';}*/
+/*i.emoji.EMOJINAME::before{content: '🗫'; title: 'THREE SPEECH BUBBLES';}*/
+/*i.emoji.EMOJINAME::before{content: '🗬'; title: 'LEFT THOUGHT BUBBLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗭'; title: 'RIGHT THOUGHT BUBBLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗮'; title: 'LEFT ANGER BUBBLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗯'; title: 'RIGHT ANGER BUBBLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗰'; title: 'MOOD BUBBLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗱'; title: 'LIGHTNING MOOD BUBBLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🗲'; title: 'LIGHTNING MOOD';}*/
+/*i.emoji.EMOJINAME::before{content: '🗳'; title: 'BALLOT BOX WITH BALLOT';}*/
+/*i.emoji.EMOJINAME::before{content: '🗴'; title: 'BALLOT SCRIPT X';}*/
+/*i.emoji.EMOJINAME::before{content: '🗵'; title: 'BALLOT BOX WITH SCRIPT X';}*/
+/*i.emoji.EMOJINAME::before{content: '🗶'; title: 'BALLOT BOLD SCRIPT X';}*/
+/*i.emoji.EMOJINAME::before{content: '🗷'; title: 'BALLOT BOX WITH BOLD SCRIPT X';}*/
+/*i.emoji.EMOJINAME::before{content: '🗸'; title: 'LIGHT CHECK MARK';}*/
+/*i.emoji.EMOJINAME::before{content: '🗹'; title: 'BALLOT BOX WITH BOLD CHECK';}*/
+/*i.emoji.EMOJINAME::before{content: '🗺'; title: 'WORLD MAP';}*/
+/*i.emoji.EMOJINAME::before{content: '🗻'; title: 'MOUNT FUJI';}*/
+/*i.emoji.EMOJINAME::before{content: '🗼'; title: 'TOKYO TOWER';}*/
+/*i.emoji.EMOJINAME::before{content: '🗽'; title: 'STATUE OF LIBERTY';}*/
+/*i.emoji.EMOJINAME::before{content: '🗾'; title: 'SILHOUETTE OF JAPAN';}*/
+/*i.emoji.EMOJINAME::before{content: '🗿'; title: 'MOYAI';}*/
+
+
+/* 記号と絵文字補助: http://www.asahi-net.or.jp/~ax2s-kmtn/ref/unicode/u1f900.html */
+/*i.emoji.EMOJINAME::before{content: '🤀'; title: 'CIRCLED CROSS FORMEE WITH FOUR DOTS';}*/
+/*i.emoji.EMOJINAME::before{content: '🤁'; title: 'CIRCLED CROSS FORMEE WITH TWO DOTS';}*/
+/*i.emoji.EMOJINAME::before{content: '🤂'; title: 'CIRCLED CROSS FORMEE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤃'; title: 'LEFT HALF CIRCLE WITH FOUR DOTS';}*/
+/*i.emoji.EMOJINAME::before{content: '🤄'; title: 'LEFT HALF CIRCLE WITH THREE DOTS';}*/
+/*i.emoji.EMOJINAME::before{content: '🤅'; title: 'LEFT HALF CIRCLE WITH TWO DOTS';}*/
+/*i.emoji.EMOJINAME::before{content: '🤆'; title: 'LEFT HALF CIRCLE WITH DOT';}*/
+/*i.emoji.EMOJINAME::before{content: '🤇'; title: 'LEFT HALF CIRCLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤈'; title: 'DOWNWARD FACING HOOK';}*/
+/*i.emoji.EMOJINAME::before{content: '🤉'; title: 'DOWNWARD FACING NOTCHED HOOK';}*/
+/*i.emoji.EMOJINAME::before{content: '🤊'; title: 'DOWNWARD FACING HOOK WITH DOT';}*/
+/*i.emoji.EMOJINAME::before{content: '🤋'; title: 'DOWNWARD FACING NOTCHED HOOK WITH DOT';}*/
+/*i.emoji.EMOJINAME::before{content: '🤌'; title: 'PINCHED FINGERS';}*/
+/*i.emoji.EMOJINAME::before{content: '🤍'; title: 'WHITE HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '🤎'; title: 'BROWN HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '🤏'; title: 'PINCHING HAND';}*/
+/*i.emoji.EMOJINAME::before{content: '🤐'; title: 'ZIPPER-MOUTH FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤑'; title: 'MONEY-MOUTH FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤒'; title: 'FACE WITH THERMOMETER';}*/
+/*i.emoji.EMOJINAME::before{content: '🤓'; title: 'NERD FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤔'; title: 'THINKING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤕'; title: 'FACE WITH HEAD-BANDAGE';}*/
+i.emoji.robot::before{content: '🤖'; title: 'ROBOT FACE';}
+/*i.emoji.EMOJINAME::before{content: '🤗'; title: 'HUGGING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤘'; title: 'SIGN OF THE HORNS';}*/
+/*i.emoji.EMOJINAME::before{content: '🤙'; title: 'CALL ME HAND';}*/
+/*i.emoji.EMOJINAME::before{content: '🤚'; title: 'RAISED BACK OF HAND';}*/
+/*i.emoji.EMOJINAME::before{content: '🤛'; title: 'LEFT-FACING FIST';}*/
+/*i.emoji.EMOJINAME::before{content: '🤜'; title: 'RIGHT-FACING FIST';}*/
+/*i.emoji.EMOJINAME::before{content: '🤝'; title: 'HANDSHAKE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤞'; title: 'HAND WITH INDEX AND MIDDLE FINGERS CROSSED';}*/
+/*i.emoji.EMOJINAME::before{content: '🤟'; title: 'I LOVE YOU HAND SIGN';}*/
+i.emoji.cowboy::before{content: '🤠'; title: 'FACE WITH COWBOY HAT';}
+i.emoji.clown::before{content: '🤡'; title: 'CLOWN FACE';}
+/*i.emoji.EMOJINAME::before{content: '🤢'; title: 'NAUSEATED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤣'; title: 'ROLLING ON THE FLOOR LAUGHING';}*/
+/*i.emoji.EMOJINAME::before{content: '🤤'; title: 'DROOLING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤥'; title: 'LYING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤦'; title: 'FACE PALM';}*/
+/*i.emoji.EMOJINAME::before{content: '🤧'; title: 'SNEEZING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤨'; title: 'FACE WITH ONE EYEBROW RAISED';}*/
+/*i.emoji.EMOJINAME::before{content: '🤩'; title: 'GRINNING FACE WITH STAR EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '🤪'; title: 'GRINNING FACE WITH ONE LARGE AND ONE SMALL EYE';}*/
+/*i.emoji.EMOJINAME::before{content: '🤫'; title: 'FACE WITH FINGER COVERING CLOSED LIPS';}*/
+/*i.emoji.EMOJINAME::before{content: '🤬'; title: 'SERIOUS FACE WITH SYMBOLS COVERING MOUTH';}*/
+/*i.emoji.EMOJINAME::before{content: '🤭'; title: 'SMILING FACE WITH SMILING EYES AND HAND COVERING MOUTH';}*/
+/*i.emoji.EMOJINAME::before{content: '🤮'; title: 'FACE WITH OPEN MOUTH VOMITING';}*/
+/*i.emoji.EMOJINAME::before{content: '🤯'; title: 'SHOCKED FACE WITH EXPLODING HEAD';}*/
+/*i.emoji.EMOJINAME::before{content: '🤰'; title: 'PREGNANT WOMAN';}*/
+/*i.emoji.EMOJINAME::before{content: '🤱'; title: 'BREAST-FEEDING';}*/
+/*i.emoji.EMOJINAME::before{content: '🤲'; title: 'PALMS UP TOGETHER';}*/
+/*i.emoji.EMOJINAME::before{content: '🤳'; title: 'SELFIE';}*/
+i.emoji.prince::before{content: '🤴'; title: 'PRINCE';}
+/*i.emoji.EMOJINAME::before{content: '🤵'; title: 'MAN IN TUXEDO';}*/
+/*i.emoji.EMOJINAME::before{content: '🤶'; title: 'MOTHER CHRISTMAS';}*/
+/*i.emoji.EMOJINAME::before{content: '🤷'; title: 'SHRUG';}*/
+/*i.emoji.EMOJINAME::before{content: '🤸'; title: 'PERSON DOING CARTWHEEL';}*/
+/*i.emoji.EMOJINAME::before{content: '🤹'; title: 'JUGGLING';}*/
+/*i.emoji.EMOJINAME::before{content: '🤺'; title: 'FENCER';}*/
+/*i.emoji.EMOJINAME::before{content: '🤻'; title: 'MODERN PENTATHLON';}*/
+/*i.emoji.EMOJINAME::before{content: '🤼'; title: 'WRESTLERS';}*/
+/*i.emoji.EMOJINAME::before{content: '🤽'; title: 'WATER POLO';}*/
+/*i.emoji.EMOJINAME::before{content: '🤾'; title: 'HANDBALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🤿'; title: 'DIVING MASK';}*/
+/*i.emoji.EMOJINAME::before{content: '🥀'; title: 'WILTED FLOWER';}*/
+/*i.emoji.EMOJINAME::before{content: '🥁'; title: 'DRUM WITH DRUMSTICKS';}*/
+/*i.emoji.EMOJINAME::before{content: '🥂'; title: 'CLINKING GLASSES';}*/
+/*i.emoji.EMOJINAME::before{content: '🥃'; title: 'TUMBLER GLASS';}*/
+/*i.emoji.EMOJINAME::before{content: '🥄'; title: 'SPOON';}*/
+/*i.emoji.EMOJINAME::before{content: '🥅'; title: 'GOAL NET';}*/
+/*i.emoji.EMOJINAME::before{content: '🥆'; title: 'RIFLE';}*/
+i.emoji.gold_medal::before{content: '🥇'; title: 'FIRST PLACE MEDAL';}
+i.emoji.silver_medal::before{content: '🥈'; title: 'SECOND PLACE MEDAL';}
+i.emoji.bronze_medal::before{content: '🥉'; title: 'THIRD PLACE MEDAL';}
+/*i.emoji.EMOJINAME::before{content: '🥊'; title: 'BOXING GLOVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🥋'; title: 'MARTIAL ARTS UNIFORM';}*/
+/*i.emoji.EMOJINAME::before{content: '🥌'; title: 'CURLING STONE';}*/
+/*i.emoji.EMOJINAME::before{content: '🥍'; title: 'LACROSSE STICK AND BALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🥎'; title: 'SOFTBALL';}*/
+/*i.emoji.EMOJINAME::before{content: '🥏'; title: 'FLYING DISC';}*/
+/*i.emoji.EMOJINAME::before{content: '🥐'; title: 'CROISSANT';}*/
+/*i.emoji.EMOJINAME::before{content: '🥑'; title: 'AVOCADO';}*/
+/*i.emoji.EMOJINAME::before{content: '🥒'; title: 'CUCUMBER';}*/
+/*i.emoji.EMOJINAME::before{content: '🥓'; title: 'BACON';}*/
+/*i.emoji.EMOJINAME::before{content: '🥔'; title: 'POTATO';}*/
+/*i.emoji.EMOJINAME::before{content: '🥕'; title: 'CARROT';}*/
+/*i.emoji.EMOJINAME::before{content: '🥖'; title: 'BAGUETTE BREAD';}*/
+/*i.emoji.EMOJINAME::before{content: '🥗'; title: 'GREEN SALAD';}*/
+/*i.emoji.EMOJINAME::before{content: '🥘'; title: 'SHALLOW PAN OF FOOD';}*/
+/*i.emoji.EMOJINAME::before{content: '🥙'; title: 'STUFFED FLATBREAD';}*/
+/*i.emoji.EMOJINAME::before{content: '🥚'; title: 'EGG';}*/
+/*i.emoji.EMOJINAME::before{content: '🥛'; title: 'GLASS OF MILK';}*/
+/*i.emoji.EMOJINAME::before{content: '🥜'; title: 'PEANUTS';}*/
+/*i.emoji.EMOJINAME::before{content: '🥝'; title: 'KIWIFRUIT';}*/
+/*i.emoji.EMOJINAME::before{content: '🥞'; title: 'PANCAKES';}*/
+/*i.emoji.EMOJINAME::before{content: '🥟'; title: 'DUMPLING';}*/
+/*i.emoji.EMOJINAME::before{content: '🥠'; title: 'FORTUNE COOKIE';}*/
+/*i.emoji.EMOJINAME::before{content: '🥡'; title: 'TAKEOUT BOX';}*/
+/*i.emoji.EMOJINAME::before{content: '🥢'; title: 'CHOPSTICKS';}*/
+/*i.emoji.EMOJINAME::before{content: '🥣'; title: 'BOWL WITH SPOON';}*/
+/*i.emoji.EMOJINAME::before{content: '🥤'; title: 'CUP WITH STRAW';}*/
+/*i.emoji.EMOJINAME::before{content: '🥥'; title: 'COCONUT';}*/
+/*i.emoji.EMOJINAME::before{content: '🥦'; title: 'BROCCOLI';}*/
+/*i.emoji.EMOJINAME::before{content: '🥧'; title: 'PIE';}*/
+/*i.emoji.EMOJINAME::before{content: '🥨'; title: 'PRETZEL';}*/
+/*i.emoji.EMOJINAME::before{content: '🥩'; title: 'CUT OF MEAT';}*/
+/*i.emoji.EMOJINAME::before{content: '🥪'; title: 'SANDWICH';}*/
+/*i.emoji.EMOJINAME::before{content: '🥫'; title: 'CANNED FOOD';}*/
+/*i.emoji.EMOJINAME::before{content: '🥬'; title: 'LEAFY GREEN';}*/
+/*i.emoji.EMOJINAME::before{content: '🥭'; title: 'MANGO';}*/
+/*i.emoji.EMOJINAME::before{content: '🥮'; title: 'MOON CAKE';}*/
+/*i.emoji.EMOJINAME::before{content: '🥯'; title: 'BAGEL';}*/
+/*i.emoji.EMOJINAME::before{content: '🥰'; title: 'SMILING FACE WITH SMILING EYES AND THREE HEARTS';}*/
+/*i.emoji.EMOJINAME::before{content: '🥱'; title: 'YAWNING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🥲'; title: 'SMILING FACE WITH TEAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🥳'; title: 'FACE WITH PARTY HORN AND PARTY HAT';}*/
+/*i.emoji.EMOJINAME::before{content: '🥴'; title: 'FACE WITH UNEVEN EYES AND WAVY MOUTH';}*/
+/*i.emoji.EMOJINAME::before{content: '🥵'; title: 'OVERHEATED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🥶'; title: 'FREEZING FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🥷'; title: 'NINJA';}*/
+/*i.emoji.EMOJINAME::before{content: '🥸'; title: 'DISGUISED FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🥺'; title: 'FACE WITH PLEADING EYES';}*/
+/*i.emoji.EMOJINAME::before{content: '🥻'; title: 'SARI';}*/
+/*i.emoji.EMOJINAME::before{content: '🥼'; title: 'LAB COAT';}*/
+/*i.emoji.EMOJINAME::before{content: '🥽'; title: 'GOGGLES';}*/
+/*i.emoji.EMOJINAME::before{content: '🥾'; title: 'HIKING BOOT';}*/
+/*i.emoji.EMOJINAME::before{content: '🥿'; title: 'FLAT SHOE';}*/
+i.emoji.crab::before{content: '🦀'; title: 'CRAB';}
+i.emoji.lion::before{content: '🦁'; title: 'LION FACE';}
+/*i.emoji.EMOJINAME::before{content: '🦂'; title: 'SCORPION';}*/
+/*i.emoji.EMOJINAME::before{content: '🦃'; title: 'TURKEY';}*/
+/*i.emoji.EMOJINAME::before{content: '🦄'; title: 'UNICORN FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🦅'; title: 'EAGLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🦆'; title: 'DUCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🦇'; title: 'BAT';}*/
+/*i.emoji.EMOJINAME::before{content: '🦈'; title: 'SHARK';}*/
+/*i.emoji.EMOJINAME::before{content: '🦉'; title: 'OWL';}*/
+i.emoji.fox::before{content: '🦊'; title: 'FOX FACE';}
+/*i.emoji.EMOJINAME::before{content: '🦋'; title: 'BUTTERFLY';}*/
+/*i.emoji.EMOJINAME::before{content: '🦌'; title: 'DEER';}*/
+/*i.emoji.EMOJINAME::before{content: '🦍'; title: 'GORILLA';}*/
+/*i.emoji.EMOJINAME::before{content: '🦎'; title: 'LIZARD';}*/
+/*i.emoji.EMOJINAME::before{content: '🦏'; title: 'RHINOCEROS';}*/
+/*i.emoji.EMOJINAME::before{content: '🦐'; title: 'SHRIMP';}*/
+/*i.emoji.EMOJINAME::before{content: '🦑'; title: 'SQUID';}*/
+/*i.emoji.EMOJINAME::before{content: '🦒'; title: 'GIRAFFE FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🦓'; title: 'ZEBRA FACE';}*/
+/*i.emoji.EMOJINAME::before{content: '🦔'; title: 'HEDGEHOG';}*/
+/*i.emoji.EMOJINAME::before{content: '🦕'; title: 'SAUROPOD';}*/
+/*i.emoji.EMOJINAME::before{content: '🦖'; title: 'T-REX';}*/
+/*i.emoji.EMOJINAME::before{content: '🦗'; title: 'CRICKET';}*/
+/*i.emoji.EMOJINAME::before{content: '🦘'; title: 'KANGAROO';}*/
+/*i.emoji.EMOJINAME::before{content: '🦙'; title: 'LLAMA';}*/
+/*i.emoji.EMOJINAME::before{content: '🦚'; title: 'PEACOCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🦛'; title: 'HIPPOPOTAMUS';}*/
+/*i.emoji.EMOJINAME::before{content: '🦜'; title: 'PARROT';}*/
+i.emoji.racoon::before{content: '🦝'; title: 'RACCOON';}
+/*i.emoji.EMOJINAME::before{content: '🦞'; title: 'LOBSTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🦟'; title: 'MOSQUITO';}*/
+/*i.emoji.EMOJINAME::before{content: '🦠'; title: 'MICROBE';}*/
+/*i.emoji.EMOJINAME::before{content: '🦡'; title: 'BADGER';}*/
+/*i.emoji.EMOJINAME::before{content: '🦢'; title: 'SWAN';}*/
+/*i.emoji.EMOJINAME::before{content: '🦣'; title: 'MAMMOTH';}*/
+/*i.emoji.EMOJINAME::before{content: '🦤'; title: 'DODO';}*/
+/*i.emoji.EMOJINAME::before{content: '🦥'; title: 'SLOTH';}*/
+/*i.emoji.EMOJINAME::before{content: '🦦'; title: 'OTTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🦧'; title: 'ORANGUTAN';}*/
+/*i.emoji.EMOJINAME::before{content: '🦨'; title: 'SKUNK';}*/
+/*i.emoji.EMOJINAME::before{content: '🦩'; title: 'FLAMINGO';}*/
+/*i.emoji.EMOJINAME::before{content: '🦪'; title: 'OYSTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🦫'; title: 'BEAVER';}*/
+/*i.emoji.EMOJINAME::before{content: '🦬'; title: 'BISON';}*/
+/*i.emoji.EMOJINAME::before{content: '🦭'; title: 'SEAL';}*/
+/*i.emoji.EMOJINAME::before{content: '🦮'; title: 'GUIDE DOG';}*/
+/*i.emoji.EMOJINAME::before{content: '🦯'; title: 'PROBING CANE';}*/
+/*i.emoji.EMOJINAME::before{content: '🦰'; title: 'EMOJI COMPONENT RED HAIR';}*/
+/*i.emoji.EMOJINAME::before{content: '🦱'; title: 'EMOJI COMPONENT CURLY HAIR';}*/
+/*i.emoji.EMOJINAME::before{content: '🦲'; title: 'EMOJI COMPONENT BALD';}*/
+/*i.emoji.EMOJINAME::before{content: '🦳'; title: 'EMOJI COMPONENT WHITE HAIR';}*/
+/*i.emoji.EMOJINAME::before{content: '🦴'; title: 'BONE';}*/
+/*i.emoji.EMOJINAME::before{content: '🦵'; title: 'LEG';}*/
+/*i.emoji.EMOJINAME::before{content: '🦶'; title: 'FOOT';}*/
+/*i.emoji.EMOJINAME::before{content: '🦷'; title: 'TOOTH';}*/
+i.emoji.superhero::before{content: '🦸'; title: 'SUPERHERO';}
+/*i.emoji.EMOJINAME::before{content: '🦹'; title: 'SUPERVILLAIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🦺'; title: 'SAFETY VEST';}*/
+/*i.emoji.EMOJINAME::before{content: '🦻'; title: 'EAR WITH HEARING AID';}*/
+/*i.emoji.EMOJINAME::before{content: '🦼'; title: 'MOTORIZED WHEELCHAIR';}*/
+/*i.emoji.EMOJINAME::before{content: '🦽'; title: 'MANUAL WHEELCHAIR';}*/
+/*i.emoji.EMOJINAME::before{content: '🦾'; title: 'MECHANICAL ARM';}*/
+/*i.emoji.EMOJINAME::before{content: '🦿'; title: 'MECHANICAL LEG';}*/
+/*i.emoji.EMOJINAME::before{content: '🧀'; title: 'CHEESE WEDGE';}*/
+/*i.emoji.EMOJINAME::before{content: '🧁'; title: 'CUPCAKE';}*/
+/*i.emoji.EMOJINAME::before{content: '🧂'; title: 'SALT SHAKER';}*/
+/*i.emoji.EMOJINAME::before{content: '🧃'; title: 'BEVERAGE BOX';}*/
+/*i.emoji.EMOJINAME::before{content: '🧄'; title: 'GARLIC';}*/
+/*i.emoji.EMOJINAME::before{content: '🧅'; title: 'ONION';}*/
+/*i.emoji.EMOJINAME::before{content: '🧆'; title: 'FALAFEL';}*/
+/*i.emoji.EMOJINAME::before{content: '🧇'; title: 'WAFFLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🧈'; title: 'BUTTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🧉'; title: 'MATE DRINK';}*/
+/*i.emoji.EMOJINAME::before{content: '🧊'; title: 'ICE CUBE';}*/
+/*i.emoji.EMOJINAME::before{content: '🧋'; title: 'BUBBLE TEA';}*/
+/*i.emoji.EMOJINAME::before{content: '🧍'; title: 'STANDING PERSON';}*/
+/*i.emoji.EMOJINAME::before{content: '🧎'; title: 'KNEELING PERSON';}*/
+/*i.emoji.EMOJINAME::before{content: '🧏'; title: 'DEAF PERSON';}*/
+/*i.emoji.EMOJINAME::before{content: '🧐'; title: 'FACE WITH MONOCLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🧑'; title: 'ADULT';}*/
+/*i.emoji.EMOJINAME::before{content: '🧒'; title: 'CHILD';}*/
+/*i.emoji.EMOJINAME::before{content: '🧓'; title: 'OLDER ADULT';}*/
+/*i.emoji.EMOJINAME::before{content: '🧔'; title: 'BEARDED PERSON';}*/
+/*i.emoji.EMOJINAME::before{content: '🧕'; title: 'PERSON WITH HEADSCARF';}*/
+/*i.emoji.EMOJINAME::before{content: '🧖'; title: 'PERSON IN STEAMY ROOM';}*/
+/*i.emoji.EMOJINAME::before{content: '🧗'; title: 'PERSON CLIMBING';}*/
+/*i.emoji.EMOJINAME::before{content: '🧘'; title: 'PERSON IN LOTUS POSITION';}*/
+i.emoji.mage::before{content: '🧙'; title: 'MAGE';}
+i.emoji.fairy::before{content: '🧚'; title: 'FAIRY';}
+i.emoji.vampire::before{content: '🧛'; title: 'VAMPIRE';}
+/*i.emoji.EMOJINAME::before{content: '🧜'; title: 'MERPERSON';}*/
+i.emoji.elf::before{content: '🧝'; title: 'ELF';}
+i.emoji.genie::before{content: '🧞'; title: 'GENIE';}*/
+i.emoji.zombie::before{content: '🧟'; title: 'ZOMBIE';}
+/*i.emoji.EMOJINAME::before{content: '🧠'; title: 'BRAIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🧡'; title: 'ORANGE HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '🧢'; title: 'BILLED CAP';}*/
+/*i.emoji.EMOJINAME::before{content: '🧣'; title: 'SCARF';}*/
+/*i.emoji.EMOJINAME::before{content: '🧤'; title: 'GLOVES';}*/
+/*i.emoji.EMOJINAME::before{content: '🧥'; title: 'COAT';}*/
+/*i.emoji.EMOJINAME::before{content: '🧦'; title: 'SOCKS';}*/
+/*i.emoji.EMOJINAME::before{content: '🧧'; title: 'RED GIFT ENVELOPE';}*/
+/*i.emoji.EMOJINAME::before{content: '🧨'; title: 'FIRECRACKER';}*/
+/*i.emoji.EMOJINAME::before{content: '🧩'; title: 'JIGSAW PUZZLE PIECE';}*/
+/*i.emoji.EMOJINAME::before{content: '🧪'; title: 'TEST TUBE';}*/
+/*i.emoji.EMOJINAME::before{content: '🧫'; title: 'PETRI DISH';}*/
+/*i.emoji.EMOJINAME::before{content: '🧬'; title: 'DNA DOUBLE HELIX';}*/
+/*i.emoji.EMOJINAME::before{content: '🧭'; title: 'COMPASS';}*/
+/*i.emoji.EMOJINAME::before{content: '🧮'; title: 'ABACUS';}*/
+/*i.emoji.EMOJINAME::before{content: '🧯'; title: 'FIRE EXTINGUISHER';}*/
+/*i.emoji.EMOJINAME::before{content: '🧰'; title: 'TOOLBOX';}*/
+/*i.emoji.EMOJINAME::before{content: '🧱'; title: 'BRICK';}*/
+/*i.emoji.EMOJINAME::before{content: '🧲'; title: 'MAGNET';}*/
+/*i.emoji.EMOJINAME::before{content: '🧳'; title: 'LUGGAGE';}*/
+/*i.emoji.EMOJINAME::before{content: '🧴'; title: 'LOTION BOTTLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🧵'; title: 'SPOOL OF THREAD';}*/
+/*i.emoji.EMOJINAME::before{content: '🧶'; title: 'BALL OF YARN';}*/
+/*i.emoji.EMOJINAME::before{content: '🧷'; title: 'SAFETY PIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🧸'; title: 'TEDDY BEAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🧹'; title: 'BROOM';}*/
+/*i.emoji.EMOJINAME::before{content: '🧺'; title: 'BASKET';}*/
+/*i.emoji.EMOJINAME::before{content: '🧻'; title: 'ROLL OF PAPER';}*/
+/*i.emoji.EMOJINAME::before{content: '🧼'; title: 'BAR OF SOAP';}*/
+/*i.emoji.EMOJINAME::before{content: '🧽'; title: 'SPONGE';}*/
+/*i.emoji.EMOJINAME::before{content: '🧾'; title: 'RECEIPT';}*/
+/*i.emoji.EMOJINAME::before{content: '🧿'; title: 'NAZAR AMULET';}*/
+
+
+/* 記号と絵文字拡張A: http://www.asahi-net.or.jp/~ax2s-kmtn/ref/unicode/u1fa70.html */
+/*i.emoji.EMOJINAME::before{content: '🩰'; title: 'BALLET SHOES';}*/
+/*i.emoji.EMOJINAME::before{content: '🩱'; title: 'ONE-PIECE SWIMSUIT';}*/
+/*i.emoji.EMOJINAME::before{content: '🩲'; title: 'BRIEFS';}*/
+/*i.emoji.EMOJINAME::before{content: '🩳'; title: 'SHORTS';}*/
+/*i.emoji.EMOJINAME::before{content: '🩴'; title: 'THONG SANDAL';}*/
+/*i.emoji.EMOJINAME::before{content: '🩸'; title: 'DROP OF BLOOD';}*/
+/*i.emoji.EMOJINAME::before{content: '🩹'; title: 'ADHESIVE BANDAGE';}*/
+/*i.emoji.EMOJINAME::before{content: '🩺'; title: 'STETHOSCOPE';}*/
+/*i.emoji.EMOJINAME::before{content: '🪀'; title: 'YO-YO';}*/
+/*i.emoji.EMOJINAME::before{content: '🪁'; title: 'KITE';}*/
+/*i.emoji.EMOJINAME::before{content: '🪂'; title: 'PARACHUTE';}*/
+/*i.emoji.EMOJINAME::before{content: '🪃'; title: 'BOOMERANG';}*/
+/*i.emoji.EMOJINAME::before{content: '🪄'; title: 'MAGIC WAND';}*/
+/*i.emoji.EMOJINAME::before{content: '🪅'; title: 'PINATA';}*/
+/*i.emoji.EMOJINAME::before{content: '🪆'; title: 'NESTING DOLLS';}*/
+/*i.emoji.EMOJINAME::before{content: '🪐'; title: 'RINGED PLANET';}*/
+/*i.emoji.EMOJINAME::before{content: '🪑'; title: 'CHAIR';}*/
+/*i.emoji.EMOJINAME::before{content: '🪒'; title: 'RAZOR';}*/
+/*i.emoji.EMOJINAME::before{content: '🪓'; title: 'AXE';}*/
+/*i.emoji.EMOJINAME::before{content: '🪔'; title: 'DIYA LAMP';}*/
+/*i.emoji.EMOJINAME::before{content: '🪕'; title: 'BANJO';}*/
+/*i.emoji.EMOJINAME::before{content: '🪖'; title: 'MILITARY HELMET';}*/
+/*i.emoji.EMOJINAME::before{content: '🪗'; title: 'ACCORDION';}*/
+/*i.emoji.EMOJINAME::before{content: '🪘'; title: 'LONG DRUM';}*/
+/*i.emoji.EMOJINAME::before{content: '🪙'; title: 'COIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🪚'; title: 'CARPENTRY SAW';}*/
+/*i.emoji.EMOJINAME::before{content: '🪛'; title: 'SCREWDRIVER';}*/
+/*i.emoji.EMOJINAME::before{content: '🪜'; title: 'LADDER';}*/
+/*i.emoji.EMOJINAME::before{content: '🪝'; title: 'HOOK';}*/
+/*i.emoji.EMOJINAME::before{content: '🪞'; title: 'MIRROR';}*/
+/*i.emoji.EMOJINAME::before{content: '🪟'; title: 'WINDOW';}*/
+/*i.emoji.EMOJINAME::before{content: '🪠'; title: 'PLUNGER';}*/
+/*i.emoji.EMOJINAME::before{content: '🪡'; title: 'SEWING NEEDLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🪢'; title: 'KNOT';}*/
+/*i.emoji.EMOJINAME::before{content: '🪣'; title: 'BUCKET';}*/
+/*i.emoji.EMOJINAME::before{content: '🪤'; title: 'MOUSE TRAP';}*/
+/*i.emoji.EMOJINAME::before{content: '🪥'; title: 'TOOTHBRUSH';}*/
+/*i.emoji.EMOJINAME::before{content: '🪦'; title: 'HEADSTONE';}*/
+/*i.emoji.EMOJINAME::before{content: '🪧'; title: 'PLACARD';}*/
+/*i.emoji.EMOJINAME::before{content: '🪨'; title: 'ROCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🪰'; title: 'FLY';}*/
+/*i.emoji.EMOJINAME::before{content: '🪱'; title: 'WORM';}*/
+/*i.emoji.EMOJINAME::before{content: '🪲'; title: 'BEETLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🪳'; title: 'COCKROACH';}*/
+/*i.emoji.EMOJINAME::before{content: '🪴'; title: 'POTTED PLANT';}*/
+/*i.emoji.EMOJINAME::before{content: '🪵'; title: 'WOOD';}*/
+/*i.emoji.EMOJINAME::before{content: '🪶'; title: 'FEATHER';}*/
+/*i.emoji.EMOJINAME::before{content: '🫀'; title: 'ANATOMICAL HEART';}*/
+/*i.emoji.EMOJINAME::before{content: '🫁'; title: 'LUNGS';}*/
+/*i.emoji.EMOJINAME::before{content: '🫂'; title: 'PEOPLE HUGGING';}*/
+/*i.emoji.EMOJINAME::before{content: '🫐'; title: 'BLUEBERRIES';}*/
+/*i.emoji.EMOJINAME::before{content: '🫑'; title: 'BELL PEPPER';}*/
+/*i.emoji.EMOJINAME::before{content: '🫒'; title: 'OLIVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🫓'; title: 'FLATBREAD';}*/
+/*i.emoji.EMOJINAME::before{content: '🫔'; title: 'TAMALE';}*/
+/*i.emoji.EMOJINAME::before{content: '🫕'; title: 'FONDUE';}*/
+/*i.emoji.EMOJINAME::before{content: '🫖'; title: 'TEAPOT';}*/
+
+/* 交通と地図の記号: http://www.asahi-net.or.jp/~ax2s-kmtn/ref/unicode/u1f680.html */
+i.emoji.rocket::before{content: '🚀'; title: 'ROCKET';}
+/*i.emoji.EMOJINAME::before{content: '🚁'; title: 'HELICOPTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🚂'; title: 'STEAM LOCOMOTIVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🚃'; title: 'RAILWAY CAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🚄'; title: 'HIGH-SPEED TRAIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🚅'; title: 'HIGH-SPEED TRAIN WITH BULLET NOSE';}*/
+/*i.emoji.EMOJINAME::before{content: '🚆'; title: 'TRAIN';}*/
+/*i.emoji.EMOJINAME::before{content: '🚇'; title: 'METRO';}*/
+/*i.emoji.EMOJINAME::before{content: '🚈'; title: 'LIGHT RAIL';}*/
+/*i.emoji.EMOJINAME::before{content: '🚉'; title: 'STATION';}*/
+/*i.emoji.EMOJINAME::before{content: '🚊'; title: 'TRAM';}*/
+/*i.emoji.EMOJINAME::before{content: '🚋'; title: 'TRAM CAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🚌'; title: 'BUS';}*/
+/*i.emoji.EMOJINAME::before{content: '🚍'; title: 'ONCOMING BUS';}*/
+/*i.emoji.EMOJINAME::before{content: '🚎'; title: 'TROLLEYBUS';}*/
+/*i.emoji.EMOJINAME::before{content: '🚏'; title: 'BUS STOP';}*/
+/*i.emoji.EMOJINAME::before{content: '🚐'; title: 'MINIBUS';}*/
+/*i.emoji.EMOJINAME::before{content: '🚑'; title: 'AMBULANCE';}*/
+/*i.emoji.EMOJINAME::before{content: '🚒'; title: 'FIRE ENGINE';}*/
+/*i.emoji.EMOJINAME::before{content: '🚓'; title: 'POLICE CAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🚔'; title: 'ONCOMING POLICE CAR';}*/
+/*i.emoji.EMOJINAME::before{content: '🚕'; title: 'TAXI';}*/
+/*i.emoji.EMOJINAME::before{content: '🚖'; title: 'ONCOMING TAXI';}*/
+/*i.emoji.EMOJINAME::before{content: '🚗'; title: 'AUTOMOBILE';}*/
+/*i.emoji.EMOJINAME::before{content: '🚘'; title: 'ONCOMING AUTOMOBILE';}*/
+/*i.emoji.EMOJINAME::before{content: '🚙'; title: 'RECREATIONAL VEHICLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🚚'; title: 'DELIVERY TRUCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🚛'; title: 'ARTICULATED LORRY';}*/
+/*i.emoji.EMOJINAME::before{content: '🚜'; title: 'TRACTOR';}*/
+/*i.emoji.EMOJINAME::before{content: '🚝'; title: 'MONORAIL';}*/
+/*i.emoji.EMOJINAME::before{content: '🚞'; title: 'MOUNTAIN RAILWAY';}*/
+/*i.emoji.EMOJINAME::before{content: '🚟'; title: 'SUSPENSION RAILWAY';}*/
+/*i.emoji.EMOJINAME::before{content: '🚠'; title: 'MOUNTAIN CABLEWAY';}*/
+/*i.emoji.EMOJINAME::before{content: '🚡'; title: 'AERIAL TRAMWAY';}*/
+/*i.emoji.EMOJINAME::before{content: '🚢'; title: 'SHIP';}*/
+/*i.emoji.EMOJINAME::before{content: '🚣'; title: 'ROWBOAT';}*/
+/*i.emoji.EMOJINAME::before{content: '🚤'; title: 'SPEEDBOAT';}*/
+/*i.emoji.EMOJINAME::before{content: '🚥'; title: 'HORIZONTAL TRAFFIC LIGHT';}*/
+/*i.emoji.EMOJINAME::before{content: '🚦'; title: 'VERTICAL TRAFFIC LIGHT';}*/
+/*i.emoji.EMOJINAME::before{content: '🚧'; title: 'CONSTRUCTION SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '🚨'; title: 'POLICE CARS REVOLVING LIGHT';}*/
+/*i.emoji.EMOJINAME::before{content: '🚩'; title: 'TRIANGULAR FLAG ON POST';}*/
+/*i.emoji.EMOJINAME::before{content: '🚪'; title: 'DOOR';}*/
+/*i.emoji.EMOJINAME::before{content: '🚫'; title: 'NO ENTRY SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '🚬'; title: 'SMOKING SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🚭'; title: 'NO SMOKING SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🚮'; title: 'PUT LITTER IN ITS PLACE SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🚯'; title: 'DO NOT LITTER SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🚰'; title: 'POTABLE WATER SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🚱'; title: 'NON-POTABLE WATER SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🚲'; title: 'BICYCLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🚳'; title: 'NO BICYCLES';}*/
+/*i.emoji.EMOJINAME::before{content: '🚴'; title: 'BICYCLIST';}*/
+/*i.emoji.EMOJINAME::before{content: '🚵'; title: 'MOUNTAIN BICYCLIST';}*/
+/*i.emoji.EMOJINAME::before{content: '🚶'; title: 'PEDESTRIAN';}*/
+/*i.emoji.EMOJINAME::before{content: '🚷'; title: 'NO PEDESTRIANS';}*/
+/*i.emoji.EMOJINAME::before{content: '🚸'; title: 'CHILDREN CROSSING';}*/
+/*i.emoji.EMOJINAME::before{content: '🚹'; title: 'MENS SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🚺'; title: 'WOMENS SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🚻'; title: 'RESTROOM';}*/
+/*i.emoji.EMOJINAME::before{content: '🚼'; title: 'BABY SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🚽'; title: 'TOILET';}*/
+/*i.emoji.EMOJINAME::before{content: '🚾'; title: 'WATER CLOSET';}*/
+/*i.emoji.EMOJINAME::before{content: '🚿'; title: 'SHOWER';}*/
+/*i.emoji.EMOJINAME::before{content: '🛀'; title: 'BATH';}*/
+/*i.emoji.EMOJINAME::before{content: '🛁'; title: 'BATHTUB';}*/
+/*i.emoji.EMOJINAME::before{content: '🛂'; title: 'PASSPORT CONTROL';}*/
+/*i.emoji.EMOJINAME::before{content: '🛃'; title: 'CUSTOMS';}*/
+/*i.emoji.EMOJINAME::before{content: '🛄'; title: 'BAGGAGE CLAIM';}*/
+/*i.emoji.EMOJINAME::before{content: '🛅'; title: 'LEFT LUGGAGE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛆'; title: 'TRIANGLE WITH ROUNDED CORNERS';}*/
+/*i.emoji.EMOJINAME::before{content: '🛇'; title: 'PROHIBITED SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '🛈'; title: 'CIRCLED INFORMATION SOURCE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛉'; title: 'BOYS SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🛊'; title: 'GIRLS SYMBOL';}*/
+/*i.emoji.EMOJINAME::before{content: '🛋'; title: 'COUCH AND LAMP';}*/
+/*i.emoji.EMOJINAME::before{content: '🛌'; title: 'SLEEPING ACCOMMODATION';}*/
+/*i.emoji.EMOJINAME::before{content: '🛍'; title: 'SHOPPING BAGS';}*/
+/*i.emoji.EMOJINAME::before{content: '🛎'; title: 'BELLHOP BELL';}*/
+/*i.emoji.EMOJINAME::before{content: '🛏'; title: 'BED';}*/
+/*i.emoji.EMOJINAME::before{content: '🛐'; title: 'PLACE OF WORSHIP';}*/
+/*i.emoji.EMOJINAME::before{content: '🛑'; title: 'OCTAGONAL SIGN';}*/
+/*i.emoji.EMOJINAME::before{content: '🛒'; title: 'SHOPPING TROLLEY';}*/
+/*i.emoji.EMOJINAME::before{content: '🛓'; title: 'STUPA';}*/
+/*i.emoji.EMOJINAME::before{content: '🛔'; title: 'PAGODA';}*/
+/*i.emoji.EMOJINAME::before{content: '🛕'; title: 'HINDU TEMPLE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛖'; title: 'HUT';}*/
+/*i.emoji.EMOJINAME::before{content: '🛗'; title: 'ELEVATOR';}*/
+/*i.emoji.EMOJINAME::before{content: '🛠'; title: 'HAMMER AND WRENCH';}*/
+/*i.emoji.EMOJINAME::before{content: '🛡'; title: 'SHIELD';}*/
+/*i.emoji.EMOJINAME::before{content: '🛢'; title: 'OIL DRUM';}*/
+/*i.emoji.EMOJINAME::before{content: '🛣'; title: 'MOTORWAY';}*/
+/*i.emoji.EMOJINAME::before{content: '🛤'; title: 'RAILWAY TRACK';}*/
+/*i.emoji.EMOJINAME::before{content: '🛥'; title: 'MOTOR BOAT';}*/
+/*i.emoji.EMOJINAME::before{content: '🛦'; title: 'UP-POINTING MILITARY AIRPLANE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛧'; title: 'UP-POINTING AIRPLANE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛨'; title: 'UP-POINTING SMALL AIRPLANE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛩'; title: 'SMALL AIRPLANE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛪'; title: 'NORTHEAST-POINTING AIRPLANE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛫'; title: 'AIRPLANE DEPARTURE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛬'; title: 'AIRPLANE ARRIVING';}*/
+/*i.emoji.EMOJINAME::before{content: '🛰'; title: 'SATELLITE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛱'; title: 'ONCOMING FIRE ENGINE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛲'; title: 'DIESEL LOCOMOTIVE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛳'; title: 'PASSENGER SHIP';}*/
+/*i.emoji.EMOJINAME::before{content: '🛴'; title: 'SCOOTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🛵'; title: 'MOTOR SCOOTER';}*/
+/*i.emoji.EMOJINAME::before{content: '🛶'; title: 'CANOE';}*/
+/*i.emoji.EMOJINAME::before{content: '🛷'; title: 'SLED';}*/
+/*i.emoji.EMOJINAME::before{content: '🛸'; title: 'FLYING SAUCER';}*/
+/*i.emoji.EMOJINAME::before{content: '🛹'; title: 'SKATEBOARD';}*/
+/*i.emoji.EMOJINAME::before{content: '🛺'; title: 'AUTO RICKSHAW';}*/
+/*i.emoji.EMOJINAME::before{content: '🛻'; title: 'PICKUP TRUCK';}*/
+/*i.emoji.EMOJINAME::before{content: '🛼'; title: 'ROLLER SKATE';}*/

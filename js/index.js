@@ -6,8 +6,8 @@
  * Router
  */
 //Page Components
-const Home = { template: '<div>Home</div>' }
-const About = { template: '<div>About</div>' }
+const Home = { template: '<div>Home<i class="emoji lion"/></div>' }
+const About = { template: '<div>About🐶</div>' }
 //Routes
 const routes = [
   { path: '/', component: Home },

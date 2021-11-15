@@ -4,7 +4,7 @@
 	src: url(../font/NuKinakoMochi-Reg.otf);
 }
 html, body, pre, code, kbd, samp {
-    font-family: 'NuMochi';
+    font-family: 'NuMochi', MyFontFamily, sans-serif;
     image-rendering: pixelated;
 }
 
