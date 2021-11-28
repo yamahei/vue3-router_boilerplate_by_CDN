@@ -432,15 +432,15 @@ assert_exception(()=> ArrayType(0) )
 const ArrayOfMailType = VanillaType.ArrayOf(StrMailType);
 assert_true(()=> ArrayOfMailType([]) )
 assert_true(()=> ArrayOfMailType(["abc.def@ghi.jk"]) )
-assert_exception(()=> ArrayOfMailType([""]) )// StrMailType is not nullable 
-assert_exception(()=> ArrayOfMailType([null]) )// StrMailType is not nullable 
+assert_exception(()=> ArrayOfMailType([""]) )// StrMailType is not nullable
+assert_exception(()=> ArrayOfMailType([null]) )// StrMailType is not nullable
 
 const ArrayOfNullableStringType = VanillaType.ArrayOf(NullableStringType);
 assert_true(()=> ArrayOfNullableStringType([]) )
 assert_true(()=> ArrayOfNullableStringType(["abc.def@ghi.jk"]) )
-//assert_true(()=> ArrayOfNullableStringType([""]) )//FIXME: NullableStringType is nullable 
-//assert_true(()=> ArrayOfNullableStringType([null]) )//FIXME: NullableStringType is nullable 
-assert_exception(()=> ArrayOfNullableStringType(null) )// ArrayOf is not nullable 
+//assert_true(()=> ArrayOfNullableStringType([""]) )//FIXME: NullableStringType is nullable
+//assert_true(()=> ArrayOfNullableStringType([null]) )//FIXME: NullableStringType is nullable
+assert_exception(()=> ArrayOfNullableStringType(null) )// ArrayOf is not nullable
 
 const ObjectType = VanillaType.Object;
 assert_true(()=> ObjectType({}) )
@@ -510,18 +510,18 @@ const test3_object_array = VanillaType({
 });
 assert_true(()=> test3_object_array(null) )
 assert_true(()=> test3_object_array([]) )
-assert_true(()=> 
+assert_true(()=>
     test3_object_array([
         {id: 1, title: "a", content: "b", created: new Date()},
     ])
 );
-assert_exception(()=> 
+assert_exception(()=>
     test3_object_array([
         {id: 1, title: "a", content: "b", created: new Date()},
         null,
     ])
 );
-assert_exception(()=> test3_object_array([null]) ); 
+assert_exception(()=> test3_object_array([null]) );
 assert_exception(()=> test3_object_array([{hoge: 1, fuga: new Date()}]) );
 
 const test4_string_telno = VanillaType({
