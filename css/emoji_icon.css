@@ -11,6 +11,7 @@
  */
 
 i.emoji {
+  font-style: normal !important;
   /**
    * Issue 1266022: Emoji rendering lost color in Chrome 96
    * https://bugs.chromium.org/p/chromium/issues/detail?id=1266022

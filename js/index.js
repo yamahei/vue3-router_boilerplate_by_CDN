@@ -22,6 +22,7 @@ const router = VueRouter.createRouter({
 /**
  * App
  */
-const app = Vue.createApp({})
-app.use(router)
-app.mount('#app')
+const biz = new Biz();
+const app = Vue.createApp({biz: biz});
+app.use(router);
+app.mount('#app');
