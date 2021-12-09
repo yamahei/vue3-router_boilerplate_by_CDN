@@ -1,13 +1,3 @@
-/* Font */
-@font-face {
-	font-family: 'NuMochi';
-	src: url(../font/NuKinakoMochi-Reg.otf);
-}
-html, body, pre, code, kbd, samp {
-    font-family: 'NuMochi', MyFontFamily, sans-serif;
-    image-rendering: pixelated;
-}
-
 /* Scroll */
 ::-webkit-scrollbar {
     width: 6px;
